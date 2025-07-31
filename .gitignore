@@ -1,0 +1,50 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+.env
+.env.*.local
+
+# Angular
+.angular/
+.angular/cache/
+.tmp/
+out-tsc/
+coverage/
+build/
+*.tsbuildinfo
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Logs
+logs
+*.log
+log/
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.iml
+
+# Git
+*.orig
+
+# Others
+.sass-cache/
+.cache/
+firebase-debug.log
+functions/lib/
+functions/node_modules/
+
+node_modules

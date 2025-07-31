@@ -1,0 +1,70 @@
+<section class="testimonials section" id="depoimentos">
+  <div class="container">
+    <div class="section-header text-center">
+      <div class="section-badge">
+        <span>{{ content.testimonials.badge}}</span>
+      </div>
+      <h2 class="section-title">
+        {{ content.testimonials.title}}
+      </h2>
+    </div>
+    
+    <div class="testimonials-carousel">
+      <div class="testimonials-container" [style.transform]="'translateX(' + (-currentSlide * 100) + '%)'">
+        <div class="testimonial-slide" *ngFor="let testimonial of content.testimonials.items; let i = index">
+          <div class="testimonial-card card">
+            <div class="testimonial-content">
+              <div class="quote-icon">
+                <i class="fas fa-quote-left" aria-hidden="true"></i>
+              </div>
+              <p class="testimonial-text">{{ testimonial.text }}</p>
+              <div class="testimonial-rating">
+                <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <!-- Placeholder para foto do depoente -->
+                <i class="fas fa-user" aria-hidden="true"></i>
+              </div>
+              <div class="author-info">
+                <h4 class="author-name">{{ testimonial.name }}</h4>
+                <p class="author-title">{{ testimonial.title }}</p>
+                <p class="author-location">{{ testimonial.location }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="carousel-controls">
+        <button 
+          class="carousel-btn carousel-prev" 
+          (click)="previousSlide()"
+          [disabled]="currentSlide === 0"
+          aria-label="Depoimento anterior">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        
+        <div class="carousel-indicators">
+          <button 
+            *ngFor="let testimonial of content.testimonials.items; let i = index"
+            class="indicator"
+            [class.active]="i === currentSlide"
+            (click)="goToSlide(i)"
+            [attr.aria-label]="'Ir para depoimento ' + (i + 1)">
+          </button>
+        </div>
+        
+        <button 
+          class="carousel-btn carousel-next" 
+          (click)="nextSlide()"
+          [disabled]="currentSlide === content.testimonials.items.length - 1"
+          aria-label="Próximo depoimento">
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+

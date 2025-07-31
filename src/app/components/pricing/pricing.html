@@ -1,0 +1,86 @@
+<section class="pricing section" id="planos">
+  <div class="container">
+    <div class="section-header text-center">
+      <div class="section-badge">
+        <span>{{content.pricing.badge}}</span>
+      </div>
+      <h2 class="section-title">
+         {{ content.pricing.title }}
+      </h2>
+      <p class="section-description">
+        {{ content.pricing.subtitle }}
+      </p>
+    </div>
+    
+    <div class="pricing-features">
+      <div class="feature-badges">
+        <div class="feature-badge">
+          <i class="fas fa-shield-alt" aria-hidden="true"></i>
+          <span>{{ content.pricing.guarantee }}</span>
+        </div>
+        <div class="feature-badge">
+          <i class="fas fa-lock" aria-hidden="true"></i>
+          <span>{{ content.pricing.secure }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="pricing-grid">
+      <div class="pricing-card card"
+           [class.featured]="content.pricing.plan.featured">
+        <div class="plan-header">
+          <div class="plan-badge" *ngIf="content.pricing.plan.badge">
+            {{ content.pricing.plan.badge }}
+          </div>
+          <h3 class="plan-name">{{ content.pricing.plan.title }}</h3>
+          <p class="plan-description">{{ content.pricing.plan.description }}</p>
+        </div>
+        
+        <div class="plan-price">
+          <div class="price-amount">
+            <span class="currency">$</span>
+            <span class="amount">{{ content.pricing.plan.price }}</span>
+          </div>
+          <div class="price-period">{{ content.pricing.plan.period }}</div>
+        </div>
+        
+        <div class="plan-features">
+          <ul>
+            <li *ngFor="let feature of content.pricing.plan.features">
+              <i class="fas fa-check" aria-hidden="true"></i>
+              <span>{{ feature }}</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="plan-action">
+          <a href="#" class="btn" [class]="content.pricing.plan.featured ? 'btn-primary' : 'btn-outline'">
+            {{ content.hero.buttons.apply }}
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="pricing-guarantee text-center">
+      <div class="guarantee-card card">
+        <div class="guarantee-icon">
+          <i class="fas fa-shield-alt" aria-hidden="true"></i>
+        </div>
+        <h3 class="guarantee-title">{{ content.pricing.protection.title }}</h3>
+        <p class="guarantee-text">
+          {{ content.pricing.protection.description }}
+        </p>
+      </div>
+    </div>
+    
+    <div class="pricing-savings text-center">
+      <h3 class="savings-title">
+        {{ content.pricing.savings.title }}
+      </h3>
+      <p class="savings-description">
+        {{ content.pricing.savings.description }}
+      </p>
+    </div>
+  </div>
+</section>
+

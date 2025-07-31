@@ -1,0 +1,48 @@
+<header class="header">
+  <div class="container">
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <div class="logo">
+          <!-- Placeholder para logo da empresa -->
+          <img src="assets/" alt="Logo Brazucas no Board" class="logo-icon">
+          <span class="logo-text">BRAZUCAS<br><span class="logo-subtitle">NO BOARD</span></span>
+        </div>
+      </div>
+      
+      <div class="navbar-menu" [class.is-active]="isMenuOpen">
+        <a href="#sobre" class="nav-link">{{ content.header.navigation.about }}</a>
+        <a href="#beneficios" class="nav-link">{{ content.header.navigation.benefits }}</a>
+        <a href="#depoimentos" class="nav-link">{{ content.header.navigation.testimonials }}</a>
+        <a href="#planos" class="nav-link">{{ content.header.navigation.plans }}</a>
+        <a href="#mentor" class="nav-link">{{ content.header.navigation.mentor }}</a>
+
+         <div class="navbar-actions">
+          <a href="#" class="btn btn-outline">{{ content.header.navigation.studentArea }}</a>
+          <a href="#planos" class="btn btn-primary" (click)="closeMenu()">{{ content.header.navigation.apply }}</a>
+        </div> 
+        
+      </div>
+
+      <div class="header-actions">
+        <div class="language-selector">
+          <select (change)="onLanguageChange($event)" [value]="currentLanguage">
+            <option *ngFor="let lang of availableLanguages" [value]="lang.code">
+              {{ lang.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      
+      <button 
+        class="navbar-toggle" 
+        [class.is-active]="isMenuOpen"
+        (click)="toggleMenu()"
+        aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
