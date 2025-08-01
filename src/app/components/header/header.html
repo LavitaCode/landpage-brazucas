@@ -1,20 +1,28 @@
 <header class="header">
   <div class="container">
     <nav class="navbar">
+      
+      <!-- LOGO + SELECTOR WRAPPER -->
       <div class="navbar-brand">
-        <div class="logo">
-          <!-- Placeholder para logo da empresa -->
-        
-          <a class="navbar-brand" routerLink="/">
+        <div class="logo-wrapper">
+          <div class="logo">
+            <a class="navbar-brand" routerLink="/">
+              <img src="assets/img/logo-principal-azul-escuro-positivo.png" alt="Logo Brazucas" class="logo-icon">
+            </a>
+          </div>
           
-          <img src="assets/img/logo-principal-azul-escuro-positivo.png" alt="Logo Brazucas" class="logo-icon"> 
-
-          </a>
-
-         <!--  <span class="logo-text">BRAZUCAS<br><span class="logo-subtitle">NO BOARD</span></span> --> 
+          <!-- SELECTOR DE IDIOMA (vai ao lado da logo no mobile) -->
+          <div class="language-selector">
+            <select (change)="onLanguageChange($event)" [value]="currentLanguage">
+              <option *ngFor="let lang of availableLanguages" [value]="lang.code">
+                {{ lang.emoji }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
-      
+
+      <!-- MENU DE NAVEGAÇÃO -->
       <div class="navbar-menu" [class.is-active]="isMenuOpen">
         <a href="#sobre" class="nav-link">{{ content.header.navigation.about }}</a>
         <a href="#beneficios" class="nav-link">{{ content.header.navigation.benefits }}</a>
@@ -22,22 +30,15 @@
         <a href="#planos" class="nav-link">{{ content.header.navigation.plans }}</a>
         <a href="#mentor" class="nav-link">{{ content.header.navigation.mentor }}</a>
 
-         <div class="navbar-actions">
+        <div class="navbar-actions">
           <a href="#" class="btn btn-outline">{{ content.header.navigation.studentArea }}</a>
-          <a href="#planos" class="btn btn-primary" (click)="closeMenu()">{{ content.header.navigation.apply }}</a>
-        </div> 
-        
+          <a href="#planos" class="btn btn-primary" (click)="closeMenu()">
+            {{ content.header.navigation.apply }}
+          </a>
+        </div>
       </div>
 
-      <div class="language-selector">
-  <select (change)="onLanguageChange($event)" [value]="currentLanguage">
-    <option *ngFor="let lang of availableLanguages" [value]="lang.code">
-      {{ lang.emoji }}
-    </option>
-  </select>
-</div>
-
-      
+      <!-- BOTÃO DE MENU MOBILE -->
       <button 
         class="navbar-toggle" 
         [class.is-active]="isMenuOpen"
@@ -47,6 +48,7 @@
         <span></span>
         <span></span>
       </button>
+
     </nav>
   </div>
 </header>
