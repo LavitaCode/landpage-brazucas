@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LanguageService, LanguageContent } from '../../services/language.service';
 
@@ -9,27 +9,31 @@ import { LanguageService, LanguageContent } from '../../services/language.servic
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isMenuOpen = false;
   content!: LanguageContent;
   currentLanguage: string = 'pt';
-  availableLanguages: Array<{code: string, name: string}> = [];
+
+  availableLanguages = [
+    { code: 'pt', name: 'Português', emoji: '🇧🇷' },
+    { code: 'es', name: 'Español', emoji: '🇪🇸' },
+    { code: 'en', name: 'English', emoji: '🇺🇸' },
+  ];
 
   constructor(private languageService: LanguageService) {}
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.languageService.currentLanguage$.subscribe(lang => {
       this.currentLanguage = lang;
       this.content = this.languageService.getContent();
     });
-    this.availableLanguages = this.languageService.getAvailableLanguages();
   }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  closeMenu() {
+  closeMenu(): void {
     this.isMenuOpen = false;
   }
 
@@ -38,4 +42,5 @@ export class HeaderComponent {
     this.languageService.setLanguage(selectElement.value);
   }
 }
+
 

@@ -7,11 +7,11 @@
         
           <a class="navbar-brand" routerLink="/">
           
-          <img src="assets/img/logo-principal-azul-escuro-positivo.png" alt="Logo Brazucas" class="logo-icon">
+          <img src="assets/img/logo-principal-azul-escuro-positivo.png" alt="Logo Brazucas" class="logo-icon"> 
 
           </a>
 
-          <span class="logo-text">BRAZUCAS<br><span class="logo-subtitle">NO BOARD</span></span>
+         <!--  <span class="logo-text">BRAZUCAS<br><span class="logo-subtitle">NO BOARD</span></span> --> 
         </div>
       </div>
       
@@ -29,15 +29,14 @@
         
       </div>
 
-      <div class="header-actions">
-        <div class="language-selector">
-          <select (change)="onLanguageChange($event)" [value]="currentLanguage">
-            <option *ngFor="let lang of availableLanguages" [value]="lang.code">
-              {{ lang.name }}
-            </option>
-          </select>
-        </div>
-      </div>
+      <div class="language-selector">
+  <select (change)="onLanguageChange($event)" [value]="currentLanguage">
+    <option *ngFor="let lang of availableLanguages" [value]="lang.code">
+      {{ lang.emoji }}
+    </option>
+  </select>
+</div>
+
       
       <button 
         class="navbar-toggle" 
