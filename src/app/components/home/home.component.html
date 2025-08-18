@@ -10,25 +10,26 @@
     <app-footer></app-footer>
 </main>
 
+<!-- ESCONDE o launcher quando o chat estiver ABERTO -->
 <app-chatbot-launcher
+        *ngIf="!isChatOpen()"
         imgSrc="assets/dente-callcenter.png"
         bubbleText="Fale conosco"
         [bottom]="24"
         [right]="24"
-        [isOpen]="isChatOpen()"
+        [isOpen]="false"
         (launch)="openChat()">
 </app-chatbot-launcher>
 
-<!-- Backdrop: fecha ao clicar fora -->
 <div class="chat-backdrop" *ngIf="isChatOpen()" (click)="closeChat()" aria-hidden="true"></div>
 
-<!-- Painel do chat -->
 <div class="chat-panel"
      *ngIf="isChatOpen()"
      role="dialog"
      aria-modal="true"
      aria-label="Atendimento por chat">
-    <!-- Topbar: avatar + balão AO LADO do X -->
+
+    <!-- Topbar (avatar + balão AO LADO do X) -->
     <div class="chat-topbar">
         <div class="chat-top-indicator" aria-hidden="true">
             <img src="assets/dente-callcenter.png" alt="Assistente virtual" class="top-avatar" />
