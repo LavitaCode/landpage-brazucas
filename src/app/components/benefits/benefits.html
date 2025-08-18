@@ -1,48 +1,36 @@
+<!-- src/app/pages/benefits/benefits.html -->
 <section class="benefits section" id="beneficios">
-  <div class="container">
-    <div class="section-header text-center">
-      <div class="section-badge">
-        <span>{{ content.benefits.subtitle}}</span>
-      </div>
-      <h2 class="section-title">
-        {{ content.benefits.title}}
-        <!-- Com o nosso treinamento,<br>
-        você será capaz de: -->
-      </h2>
-    </div>
-    
-    <div class="benefits-grid">
-      <div class="benefit-card card fade-in-up" *ngFor="let benefit of content.benefits.items; let i = index" 
-           [style.animation-delay]="(i * 0.1) + 's'">
-        <!-- <div class="benefit-icon">
-          <i [class]="benefit.icon" aria-hidden="true"></i>
-        </div> -->
-        <h3 class="benefit-title">{{ benefit.title }}</h3>
-        <p class="benefit-description">{{ benefit.description }}</p>
-      </div>
-    </div>
-    
-    <div class="benefits-cta text-center">
-      <h3 class="cta-title">
-        <!-- Garanta a sua aprovação e exerça a sua odontologia<br>
-        para receber em dólar nos Estados Unidos! -->
-        {{ content.benefits.cta.title }}
-      </h3>
-      <p class="cta-description">
-        <!-- Esse é o treinamento preparatório que vai te ajudar a ingressar no mercado norte-americano, 
-        com capacidade de exercer a sua profissão com segurança e confiança para criar um negócio de saúde muito rentável. -->
-        {{ content.benefits.cta.description }}
-      </p>
-      <!-- <p class="cta-highlight">
-        Graças ao primeiro passo que você dará hoje, você vai entender com o Brazucas como ser aprovado no board 
-        e ter seu diploma reconhecido internacionalmente.
-        {{ content.benefits.cta.highlight }}
-      </p> -->
-      <a href="#planos" class="btn btn-primary btn-large">
-        {{ content.benefits.cta.button }}
-        <!-- É isso mesmo que eu quero -->
-      </a>
-    </div>
-  </div>
-</section>
+    <div class="container">
+        <div class="section-header text-center">
+            <div class="section-badge">
+                <span>{{ content.benefits.subtitle }}</span>
+            </div>
+            <h2 class="section-title">
+                {{ content.benefits.title }}
+            </h2>
+        </div>
 
+        <div class="benefits-grid">
+            <div
+                    class="benefit-card card fade-in-up"
+                    *ngFor="let benefit of content.benefits.items; trackBy: trackByIdx; let i = index"
+                    [style.animation-delay]="(i * 0.1) + 's'">
+
+                <div class="benefit-icon">
+                    <i class="bi" [ngClass]="iconFor(benefit.title + ' ' + benefit.description, i)" aria-hidden="true"></i>
+                </div>
+
+                <h3 class="benefit-title">{{ benefit.title }}</h3>
+                <p class="benefit-description">{{ benefit.description }}</p>
+            </div>
+        </div>
+
+        <div class="benefits-cta text-center">
+            <h3 class="cta-title">{{ content.benefits.cta.title }}</h3>
+            <p class="cta-description">{{ content.benefits.cta.description }}</p>
+            <a href="#planos" class="btn btn-primary btn-large">
+                {{ content.benefits.cta.button }}
+            </a>
+        </div>
+    </div>
+</section>
