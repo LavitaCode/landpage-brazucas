@@ -1,0 +1,116 @@
+/* src/app/pages/home/home.component.scss */
+:host { display: block; }
+
+.home-section {
+  padding-block: clamp(48px, 6vw, 96px);
+  scroll-margin-top: 72px;
+}
+.home-section.alt {
+  background: #f8fbff;
+  border-top: 1px solid #eef4fb;
+  border-bottom: 1px solid #eef4fb;
+}
+
+/* Backdrop para fechar ao clicar fora */
+.chat-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 24, 46, .35);
+  backdrop-filter: blur(1px);
+  z-index: 1050;
+}
+
+/* Painel do chat (acima do backdrop) */
+.chat-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1060;
+  width: min(520px, calc(100vw - 32px));
+  max-height: min(86vh, 780px);
+  display: block;
+  overflow: visible; /* topbar pode “sair” do card */
+}
+
+/* Widget ocupa corretamente */
+.chat-panel app-chatbot-widget { display: block; }
+
+/* ===== Topbar (avatar + balão + X lado a lado) ===== */
+.chat-topbar {
+  position: absolute;
+  top: -14px;           /* sobe um pouco acima do card */
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1062;        /* acima do conteúdo do card */
+}
+
+/* Avatar + balão (não interferem no clique do X) */
+.chat-top-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none; /* evita bloquear o X */
+}
+
+.top-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 6px 16px rgba(16,24,40,.25);
+  outline: 2px solid #fff;           /* destaca sobre fundos escuros */
+  outline-offset: 2px;
+}
+
+.top-bubble {
+  position: relative;
+  background: #0d6efd;              /* azul consistente */
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 10px 20px rgba(13,110,253,.35);
+}
+.top-bubble-arrow {
+  position: absolute;
+  left: -6px;                        /* seta apontando para o avatar */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-right: 8px solid #0d6efd;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+/* ===== Botão X suavizado (menor e discreto) ===== */
+.btn-icon.chat-close {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.95);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,.18);
+  cursor: pointer;
+}
+.btn-icon.chat-close i { font-size: 0.9rem; line-height: 1; }
+.btn-icon.chat-close:hover { background: #fff; transform: translateY(-1px); }
+.btn-icon.chat-close:active { transform: translateY(0); }
+.btn-icon.chat-close:focus-visible { box-shadow: 0 0 0 4px rgba(13,110,253,.25); }
+
+/* Dark/blue-friendly */
+@media (prefers-color-scheme: dark) {
+  .chat-backdrop { background: rgba(8, 20, 40, .45); }
+  .btn-icon.chat-close {
+    border-color: rgba(255,255,255,.08);
+    background: rgba(11,17,25,.9);
+    color: #e6edf3;
+  }
+  .btn-icon.chat-close:hover { background: #0b1119; }
+}

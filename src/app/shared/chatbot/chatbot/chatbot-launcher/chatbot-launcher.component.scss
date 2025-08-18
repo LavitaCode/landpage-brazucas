@@ -1,0 +1,49 @@
+/* src/app/shared/chatbot/chatbot-launcher.component.scss */
+:host { position: fixed; inset: auto 0 0 auto; z-index: 1062; }
+
+.chat-launcher {
+  position: fixed;
+  border-radius: 50%;
+  background: transparent;
+  outline: none;
+  transition: transform .08s ease-out, box-shadow .18s ease-out;
+  &:hover { transform: translateY(-2px); }
+  &:focus-visible { box-shadow: 0 0 0 4px rgba(13,110,253,.25); }
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  display: block;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #ffffff 40%, #f0f4f8 100%);
+  box-shadow: 0 8px 24px rgba(16,24,40,.16);
+}
+
+.bubble {
+  position: absolute;
+  right: 76px;
+  bottom: 40px;
+  background: #0d6efd;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(13,110,253,.35);
+  user-select: none;
+  animation: bubble-in .16s ease-out both;
+  z-index: 1; /* acima do avatar */
+}
+.bubble-text { display: inline-block; }
+.bubble-arrow {
+  position: absolute;
+  right: -6px;
+  bottom: 8px;
+  width: 0; height: 0;
+  border-left: 8px solid #0d6efd;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+@keyframes bubble-in { from { opacity: 0; transform: translateY(6px) scale(.98) } to { opacity: 1; transform: translateY(0) scale(1) } }

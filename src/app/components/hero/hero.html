@@ -1,77 +1,83 @@
+<!-- src/app/pages/hero/hero.html (ou src/app/components/hero/hero.html) -->
 <section class="hero" id="inicio">
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-text">
-        <div class="hero-badge">
-          <i class="fas fa-star" aria-hidden="true"></i>
-          <span>Vagas abertas para a formação</span>
-        </div>
-        
-        <h1 class="hero-title fade-in-up">
-          {{ content.hero.title }}
-           <span class="highlight">{{ content.hero.subtitle}}</span>
-        </h1>
-        
-        <p class="hero-description fade-in-up">
-          {{ content.hero.description }}
-        </p>
-        
-        <div class="hero-actions fade-in-up">
-          <a href="#planos" class="btn btn-primary btn-large">
-            <i class="fas fa-rocket" aria-hidden="true"></i>
-            {{ content.hero.buttons.apply }}
-          </a>
-          <a href="#sobre" class="btn btn-outline btn-large">
-            <i class="fas fa-play-circle" aria-hidden="true"></i>
-            {{ content.hero.buttons.learnMore }}
-          </a>
-        </div>
-        
-        <div class="hero-stats fade-in-up">
-          <div class="stat">
-            <div class="stat-number">10+</div>
-            <div class="stat-label">{{ content.hero.stats.students }}</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">19</div>
-            <div class="stat-label">{{ content.hero.stats.experience }}</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">{{ content.hero.stats.method }}</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="hero-image fade-in">
-        <div class="image-container">
-          <div class="image-placeholder">
-            <!-- Placeholder para imagem principal -->
-           <img src="assets/img/logo-vertical-azul-mdio-positivo.png" alt="Logo da Brazucas" />
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <i class="fas fa-star" aria-hidden="true"></i>
+                    <span>Vagas abertas para a formação</span>
+                </div>
 
-            <img src="" alt="" aplaceholder="Imagem principal">
-            <div class="image-overlay">
-              <div class="floating-element floating-1">
-                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-              </div>
-              <div class="floating-element floating-2">
-                <i class="fas fa-certificate" aria-hidden="true"></i>
-              </div>
-              <div class="floating-element floating-3">
-                <i class="fas fa-trophy" aria-hidden="true"></i>
-              </div>
+                <h1 class="hero-title fade-in-up">
+                    {{ content.hero.title }}
+                    <span class="highlight">{{ content.hero.subtitle }}</span>
+                </h1>
+
+                <p class="hero-description fade-in-up">
+                    {{ content.hero.description }}
+                </p>
+
+                <div class="hero-actions fade-in-up">
+                    <a href="#planos" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket" aria-hidden="true"></i>
+                        {{ content.hero.buttons.apply }}
+                    </a>
+                    <a href="#sobre" class="btn btn-outline btn-large">
+                        <i class="fas fa-play-circle" aria-hidden="true"></i>
+                        {{ content.hero.buttons.learnMore }}
+                    </a>
+                </div>
+
+                <div class="hero-stats fade-in-up">
+                    <div class="stat">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">{{ content.hero.stats.students }}</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">19</div>
+                        <div class="stat-label">{{ content.hero.stats.experience }}</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">{{ content.hero.stats.method }}</div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Background decorative elements -->
-  <div class="hero-bg">
-    <div class="bg-shape bg-shape-1"></div>
-    <div class="bg-shape bg-shape-2"></div>
-    <div class="bg-shape bg-shape-3"></div>
-  </div>
-</section>
 
+            <div class="hero-image fade-in">
+                <div class="image-container">
+                    <div class="image-placeholder">
+                        <!-- Imagem real substituindo o placeholder -->
+                        <img
+                                src="assets/img1.png"
+                                alt="Imagem destaque"
+                                class="hero-img"
+                                loading="eager"
+                                decoding="async"
+                        />
+                        <!-- Overlay decorativo -->
+                        <div class="image-overlay">
+                            <div class="floating-element floating-1">
+                                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                            </div>
+                            <div class="floating-element floating-2">
+                                <i class="fas fa-certificate" aria-hidden="true"></i>
+                            </div>
+                            <div class="floating-element floating-3">
+                                <i class="fas fa-trophy" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Background decorative elements -->
+    <div class="hero-bg">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+        <div class="bg-shape bg-shape-3"></div>
+    </div>
+</section>
