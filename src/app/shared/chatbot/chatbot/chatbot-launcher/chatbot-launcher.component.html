@@ -1,0 +1,15 @@
+<!-- src/app/shared/chatbot/chatbot-launcher.component.html -->
+<button
+        type="button"
+        class="chat-launcher btn btn-light p-0 border-0 shadow"
+        [style.bottom.px]="bottom"
+        [style.right.px]="right"
+        (click)="onOpen()"
+        aria-label="Abrir chat de atendimento">
+    <!-- Balão volta a aparecer sempre que o chat estiver fechado -->
+    <div class="bubble" *ngIf="!isOpen">
+        <span class="bubble-text">{{ bubbleText }}</span>
+        <span class="bubble-arrow" aria-hidden="true"></span>
+    </div>
+    <img [src]="imgSrc" [alt]="imgAlt" class="avatar" />
+</button>

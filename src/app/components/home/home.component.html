@@ -1,0 +1,50 @@
+<!-- src/app/pages/home/home.component.html -->
+<app-header></app-header>
+
+<main class="home-main">
+    <section id="hero" class="home-section"><app-hero></app-hero></section>
+    <section id="beneficios" class="home-section alt"><app-benefits></app-benefits></section>
+    <section id="depoimentos" class="home-section"><app-testimonials></app-testimonials></section>
+    <section id="precos" class="home-section alt"><app-pricing></app-pricing></section>
+    <section id="mentor" class="home-section"><app-mentor></app-mentor></section>
+    <app-footer></app-footer>
+</main>
+
+<app-chatbot-launcher
+        imgSrc="assets/dente-callcenter.png"
+        bubbleText="Fale conosco"
+        [bottom]="24"
+        [right]="24"
+        [isOpen]="isChatOpen()"
+        (launch)="openChat()">
+</app-chatbot-launcher>
+
+<!-- Backdrop: fecha ao clicar fora -->
+<div class="chat-backdrop" *ngIf="isChatOpen()" (click)="closeChat()" aria-hidden="true"></div>
+
+<!-- Painel do chat -->
+<div class="chat-panel"
+     *ngIf="isChatOpen()"
+     role="dialog"
+     aria-modal="true"
+     aria-label="Atendimento por chat">
+    <!-- Topbar: avatar + balão AO LADO do X -->
+    <div class="chat-topbar">
+        <div class="chat-top-indicator" aria-hidden="true">
+            <img src="assets/dente-callcenter.png" alt="Assistente virtual" class="top-avatar" />
+            <div class="top-bubble">
+                <span>Fale conosco</span>
+                <span class="top-bubble-arrow" aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <button type="button"
+                class="btn chat-close btn-icon"
+                (click)="closeChat()"
+                aria-label="Fechar chat">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <app-chatbot-widget></app-chatbot-widget>
+</div>
