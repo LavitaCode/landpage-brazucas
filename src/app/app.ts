@@ -7,20 +7,22 @@ import { TestimonialsComponent } from './components/testimonials/testimonials';
 import { PricingComponent } from './components/pricing/pricing';
 import { MentorComponent } from './components/mentor/mentor';
 import { FooterComponent } from './components/footer/footer';
+import {AboutComponent} from "./components/about/about";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    HeroComponent,
-    BenefitsComponent,
-    TestimonialsComponent,
-    PricingComponent,
-    MentorComponent,
-    FooterComponent
-  ],
+    imports: [
+        RouterOutlet,
+        HeaderComponent,
+        HeroComponent,
+        BenefitsComponent,
+        TestimonialsComponent,
+        PricingComponent,
+        MentorComponent,
+        FooterComponent,
+        AboutComponent
+    ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
