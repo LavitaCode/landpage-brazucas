@@ -1,11 +1,10 @@
-// src/app/pages/benefits/benefits.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface BenefitItem {
+interface Benefit {
+  icon: string;     // classe Bootstrap Icons (ex.: 'bi-patch-check-fill')
   title: string;
   description: string;
-  icon: string; // classe do Bootstrap Icons (ex.: "bi-patch-check")
 }
 
 @Component({
@@ -13,51 +12,28 @@ interface BenefitItem {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './benefits.html',
-  styleUrls: ['./benefits.scss']
+  styleUrls: ['./benefits.scss'],
 })
 export class BenefitsComponent {
-  /**
-   * Conteúdo base em Português (SSoT).
-   * O Website Translator do Google fará a tradução automática no DOM quando o usuário trocar o idioma.
-   */
-  readonly benefits: ReadonlyArray<BenefitItem> = [
-    {
-      title: 'Conseguir ser aprovado no Board de primeira',
-      description: 'Método validado que aumenta suas chances de aprovação logo na primeira tentativa.',
-      icon: 'bi-patch-check'
-    },
-    {
-      title: 'Exercer a odontologia de forma legal nos EUA',
-      description: 'Tenha seu diploma reconhecido e pratique sua profissão legalmente nos Estados Unidos.',
-      icon: 'bi-shield-check'
-    },
-    {
-      title: 'Voltar a viver com qualidade e recebendo o quanto merece',
-      description: 'Receba em dólar um salário compatível com a valorização que sua profissão merece.',
-      icon: 'bi-cash-coin'
-    },
-    {
-      title: 'Criar um nome para você no mercado da saúde nos EUA',
-      description: 'Construa uma reputação sólida e se destaque no mercado odontológico americano.',
-      icon: 'bi-award'
-    },
-    {
-      title: 'Superar as burocracias para ser um profissional de saúde na América',
-      description: 'Navegue com segurança por todos os processos burocráticos necessários.',
-      icon: 'bi-signpost-2'
-    },
-    {
-      title: 'Ser reconhecido no Brasil e fora dele como um profissional fora da curva',
-      description: 'Ganhe reconhecimento internacional e se torne referência em sua área.',
-      icon: 'bi-trophy'
-    }
+  // 12 benefícios (sem reduzir oferta)
+  readonly benefits: ReadonlyArray<Benefit> = [
+    { icon: 'bi-flag-fill',               title: 'Roteiro claro para o INBDE',              description: 'Passo a passo objetivo para avançar com segurança.' },
+    { icon: 'bi-ui-checks-grid',          title: 'Simulados no formato da prova',           description: 'Questões comentadas + métricas para ajustar estudos.' },
+    { icon: 'bi-rocket-takeoff-fill',     title: 'Revisões de alta retenção',               description: 'Revisões dirigidas e mapas mentais para fixação.' },
+    { icon: 'bi-collection-play-fill',    title: 'Banco curado de questões',                 description: 'Foco no que cai de verdade. Sem ruído.' },
+    { icon: 'bi-person-video3',           title: 'Mentoria individual e em grupo',           description: 'Feedback direto de quem já passou pelo processo.' },
+    { icon: 'bi-calendar2-check-fill',    title: 'Plano semanal de estudos',                 description: 'Metas claras, checkpoints e correções de rota.' },
+    { icon: 'bi-journal-richtext',        title: 'Material didático completo',               description: 'Resumos, exercícios e trilhas por tema.' },
+    { icon: 'bi-whatsapp',                title: 'Suporte ágil por WhatsApp',                description: 'Dúvidas respondidas rápido para manter o ritmo.' },
+    { icon: 'bi-translate',               title: 'Inglês técnico aplicado',                  description: 'Vocabulário e leitura no contexto do exame.' },
+    { icon: 'bi-person-gear',             title: 'Preparação para entrevistas',              description: 'Respostas, postura e diferenciais competitivos.' },
+    { icon: 'bi-diagram-3-fill',          title: 'Estratégia de application',                description: 'Orientação prática para candidaturas e docs.' },
+    { icon: 'bi-building-check',          title: 'Rota para prática legal nos EUA',          description: 'Caminho para exercer e planejar seu consultório.' },
   ] as const;
 
-  readonly ctaTitle: string = 'Garanta a sua aprovação e exerça a sua odontologia para receber em dólar nos Estados Unidos!';
-  readonly ctaDescription: string = 'Esse é o treinamento preparatório que vai te ajudar a ingressar no mercado norte-americano, com capacidade de exercer a sua profissão com segurança e confiança para criar um negócio de saúde muito rentável.';
-  readonly ctaButton: string = 'É isso mesmo que eu quero';
+  readonly ctaTitle = 'Pronto(a) para transformar seus estudos em aprovação?';
+  readonly ctaDescription = 'Comece hoje com garantia de 7 dias.';
+  readonly ctaButton = 'Ver planos e vagas';
 
-  trackByIdx(index: number): number {
-    return index;
-  }
+  trackByIdx = (i: number) => i;
 }
