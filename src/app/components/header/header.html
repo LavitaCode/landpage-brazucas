@@ -1,14 +1,16 @@
-<!-- src/app/components/header/header.html -->
 <header class="header">
     <div class="container">
-        <nav class="navbar">
+        <nav class="navbar" role="navigation" aria-label="Navegação principal">
 
-            <!-- LOGO + SELETOR DE IDIOMA -->
+            <!-- BRAND + LANG -->
             <div class="navbar-brand">
                 <div class="logo-wrapper">
                     <div class="logo">
                         <a class="navbar-brand" routerLink="/" aria-label="Ir para a página inicial">
-                            <img src="assets/img/logo-principal-azul-escuro-positivo.png" alt="Logo Brazucas" class="logo-icon">
+                            <img
+                                    src="assets/img/logo-principal-azul-escuro-positivo.png"
+                                    alt="Logo Brazucas"
+                                    class="logo-icon">
                         </a>
                     </div>
 
@@ -18,31 +20,43 @@
                 </div>
             </div>
 
-            <!-- MENU DE NAVEGAÇÃO (texto base em PT; Google Translate aplica EN/ES no DOM) -->
-            <div class="navbar-menu" [class.is-active]="isMenuOpen">
-                <a href="#sobre" class="nav-link">Sobre o Curso</a>
-                <a href="#beneficios" class="nav-link">Benefícios</a>
-                <a href="#depoimentos" class="nav-link">Depoimentos</a>
-                <a href="#planos" class="nav-link">Planos</a>
-                <a href="#mentor" class="nav-link">Mentor</a>
-
-                <div class="navbar-actions">
-                    <a href="#" class="btn btn-outline">Área do Aluno</a>
-                    <a href="#planos" class="btn btn-primary" (click)="closeMenu()">Quero fazer minha aplicação</a>
-                </div>
-            </div>
-
-            <!-- BOTÃO DE MENU MOBILE -->
+            <!-- TOGGLE (aparece só no mobile) -->
             <button
                     class="navbar-toggle"
                     [class.is-active]="isMenuOpen"
                     (click)="toggleMenu()"
                     aria-label="Alternar menu de navegação"
+                    aria-controls="primary-navigation"
                     [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
+
+            <!-- BLOCO COLAPSÁVEL:
+                 No desktop fica SEMPRE visível (em linha).
+                 No mobile abre/fecha pelo toggle acima. -->
+            <div
+                    id="primary-navigation"
+                    class="navbar-collapsible"
+                    [class.is-active]="isMenuOpen">
+
+                <!-- LINKS -->
+                <div class="menu-list" role="menubar">
+                    <a href="#sobre" class="nav-link" role="menuitem" (click)="closeMenu()">Sobre o Curso</a>
+                    <a href="#beneficios" class="nav-link" role="menuitem" (click)="closeMenu()">Benefícios</a>
+                    <a href="#depoimentos" class="nav-link" role="menuitem" (click)="closeMenu()">Depoimentos</a>
+                    <a href="#planos" class="nav-link" role="menuitem" (click)="closeMenu()">Planos</a>
+                    <a href="#mentor" class="nav-link" role="menuitem" (click)="closeMenu()">Mentor</a>
+                    <a href="#equipe" class="nav-link" role="menuitem" (click)="closeMenu()">Equipe</a>
+                </div>
+
+                <!-- AÇÕES (mantidas à direita no desktop; viram bloco abaixo no mobile) -->
+                <div class="navbar-actions">
+                    <a href="#" class="btn btn-outline" (click)="closeMenu()">Área do Aluno</a>
+                    <a href="#planos" class="btn btn-primary" (click)="closeMenu()">Quero fazer minha aplicação</a>
+                </div>
+            </div>
 
         </nav>
     </div>

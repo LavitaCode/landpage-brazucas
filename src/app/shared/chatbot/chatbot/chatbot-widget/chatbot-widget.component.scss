@@ -1,5 +1,3 @@
-/* src/app/shared/chatbot/chatbot-widget/chatbot-widget.component.scss */
-
 /* =========================
    Tokens (tema e dimensões)
    ========================= */
@@ -28,14 +26,13 @@
 }
 
 /* =========================
-   Layout: grid garante que o footer
-   fica SEMPRE separado do body.
+   Layout (grid 3 linhas)
    ========================= */
 .cbt-root {
   width: var(--cbt-w);
   height: var(--cbt-h);
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto; /* <- chave: body cresce e rola */
+  grid-template-rows: auto minmax(0, 1fr) auto;
   color: var(--cbt-ink);
   background: linear-gradient(180deg, var(--cbt-bg-1), var(--cbt-bg-2));
   box-shadow: var(--cbt-shadow);
@@ -46,33 +43,53 @@
 /* Header */
 .cbt-root .card-header {
   border-bottom: 1px solid var(--cbt-border);
-  padding: 12px;
+  padding: 10px 12px;
   background: var(--cbt-panel);
 
   .title { color: var(--cbt-ink); }
   .subtitle { color: var(--cbt-muted); }
+}
 
-  .btn.btn-outline-light.btn-sm {
-    --bs-btn-color: var(--cbt-ink);
-    --bs-btn-border-color: #2a4a7d;
-    --bs-btn-hover-border-color: #3d63a7;
-    --bs-btn-hover-color: var(--cbt-ink);
-    --bs-btn-bg: transparent;
+/* Botão “Reiniciar” compacto */
+.btn-reset {
+  --size: 34px;
+  height: var(--size);
+  padding: 0 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  line-height: 1;
+  gap: 6px;
+
+  /* mantém o estilo outline-light, mas com menos “peso” */
+  --bs-btn-color: var(--cbt-ink);
+  --bs-btn-border-color: #2a4a7d;
+  --bs-btn-hover-border-color: #3d63a7;
+  --bs-btn-hover-color: var(--cbt-ink);
+  --bs-btn-bg: transparent;
+
+  i { font-size: 1rem; line-height: 1; }
+
+  /* em telas menores, vira ícone puro */
+  @media (max-width: 680px) {
+    width: var(--size);
+    padding: 0;
+    justify-content: center;
+
+    .btn-text { display: none; }
   }
 }
 
-/* Body (ocupa a linha central do grid) */
+/* Body */
 .cbt-root .card-body {
   padding: 12px;
-  /* impede que conteúdo "passe por baixo" do footer */
-  min-height: 0; /* necessário para minmax(0,1fr) funcionar no filho */
+  min-height: 0;
 }
 
 .cbt-body {
   height: 100%;
-  overflow-y: auto;   /* apenas vertical */
+  overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 4px; /* espaço pro scrollbar */
+  padding-right: 4px;
 
   .bubble {
     border-radius: 14px;
@@ -90,27 +107,29 @@
   .time { color: var(--cbt-muted); letter-spacing: .1px; margin-top: .25rem; }
 }
 
-/* Footer (sempre visível e separado do body) */
+/* Footer */
 .cbt-root .card-footer {
   border-top: 1px solid var(--cbt-border);
   padding: 12px;
   background: var(--cbt-panel);
 }
 
+/* Grade de opções */
 .cbt-options-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;            /* 2 colunas */
-  grid-auto-rows: minmax(44px, auto);        /* linhas com altura mínima definida */
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(44px, auto);
   gap: 10px 12px;
 }
 
+/* Botões de opção – permitem quebra de linha */
 .cbt-option {
   width: 100%;
   justify-content: flex-start;
   border-radius: 12px;
   border-width: 1px;
   padding: .55rem .8rem;
-  line-height: 1.15;
+  line-height: 1.2;
   text-align: left;
   display: inline-flex;
   align-items: center;
@@ -119,12 +138,11 @@
   border-color: #3b5f97 !important;
   background: transparent;
 
-  .text-truncate {
+  .option-label {
     display: inline-block;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;         /* <<< permite quebra */
+    word-break: break-word;      /* quebra se houver palavra longa */
+    overflow-wrap: anywhere;     /* reforço para navegadores */
   }
 
   &:hover {

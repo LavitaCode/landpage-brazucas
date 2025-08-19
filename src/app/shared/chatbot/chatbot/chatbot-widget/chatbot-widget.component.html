@@ -1,4 +1,3 @@
-<!-- src/app/shared/chatbot/chatbot-widget/chatbot-widget.component.html -->
 <div class="card shadow-sm border-0 cbt-root" role="dialog" aria-label="Chatbot">
     <!-- Header -->
     <div class="card-header d-flex align-items-center justify-content-between">
@@ -6,20 +5,23 @@
             <i class="bi bi-robot fs-5 text-accent" aria-hidden="true"></i>
             <div class="lh-1">
                 <strong class="title">Atendimento Assistido</strong>
-
             </div>
         </div>
 
-        <button type="button"
-                class="btn btn-outline-light btn-sm d-inline-flex align-items-center gap-1"
+        <!-- Botão compacto (icon-first). Em telas pequenas, o texto some -->
+        <button
+                type="button"
+                class="btn btn-outline-light btn-reset d-inline-flex align-items-center"
                 (click)="reset()"
-                aria-label="Reiniciar conversa">
+                aria-label="Reiniciar conversa"
+                title="Reiniciar"
+        >
             <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
-            Reiniciar
+            <span class="btn-text">Reiniciar</span>
         </button>
     </div>
 
-    <!-- Body (NÃO use style inline aqui) -->
+    <!-- Body -->
     <div class="card-body">
         <div class="cbt-body" aria-live="polite">
             <ng-container *ngFor="let m of messages(); trackBy: trackByMsgId">
@@ -53,12 +55,15 @@
     <!-- Footer (sempre visível, 2 colunas, múltiplas linhas) -->
     <div class="card-footer">
         <div class="cbt-options-grid">
-            <button type="button"
+            <button
+                    type="button"
                     class="btn cbt-option btn-outline-light btn-sm"
                     *ngFor="let op of options(); trackBy: trackByOptionId"
-                    (click)="choose(op)">
+                    (click)="choose(op)"
+            >
                 <i class="bi bi-chat-right-text me-2" aria-hidden="true"></i>
-                <span class="text-truncate">{{ op.label }}</span>
+                <!-- Agora com quebra de linha: sem text-truncate -->
+                <span class="option-label">{{ op.label }}</span>
             </button>
         </div>
     </div>

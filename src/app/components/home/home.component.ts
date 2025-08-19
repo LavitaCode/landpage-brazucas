@@ -1,4 +1,3 @@
-// src/app/pages/home/home.component.ts
 import {
     AfterViewInit,
     Component,
@@ -7,6 +6,7 @@ import {
     inject,
     HostListener,
     ChangeDetectorRef,
+    effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -20,11 +20,14 @@ import { PricingComponent } from '../pricing/pricing';
 import { MentorComponent } from '../mentor/mentor';
 import { FooterComponent } from '../footer/footer';
 import { AboutComponent } from '../about/about';
-
+import { CourseOverviewComponent } from '../course-overview/course-overview.component';
 
 import { ChatbotLauncherComponent } from '../../shared/chatbot/chatbot/chatbot-launcher/chatbot-launcher.component';
 import { ChatbotWidgetComponent } from '../../shared/chatbot/chatbot/chatbot-widget/chatbot-widget.component';
-import {CourseOverviewComponent} from "../course-overview/course-overview.component";
+
+
+import { ChatEngineService } from '../../shared/chatbot/engine.service';
+import {PlanSelectionService} from "../../services/plan-selection.service";
 
 type Section =
     | 'hero'
@@ -45,7 +48,6 @@ const VALID_SECTIONS: ReadonlyArray<Section> = [
     'equipe',
 ];
 
-// aliases para âncoras alternativas que já existem na sua página
 const SECTION_ALIASES: Readonly<Record<string, Section>> = {
     planos: 'precos',
 };
@@ -74,11 +76,22 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     private readonly cdr = inject(ChangeDetectorRef);
     private sub?: Subscription;
 
-    // controle do chat (sem any)
+    private readonly planSvc = inject(PlanSelectionService);
+    private readonly chatEngine = inject(ChatEngineService);
+
     isChatOpen = signal<boolean>(false);
     private lastFocusedElement: HTMLElement | null = null;
 
-    constructor(private route: ActivatedRoute, private router: Router) {}
+    constructor(private route: ActivatedRoute, private router: Router) {
+        // Se um plano foi escolhido nos preços, abre o chat já no fluxo de checkout
+        effect(() => {
+            if (this.planSvc.openChatRequested()) {
+                this.openChat();
+                this.chatEngine.beginCheckoutFromSelectedPlan();
+                this.planSvc.consumeChatRequest();
+            }
+        });
+    }
 
     // ===== Chat =====
     openChat = (): void => {
@@ -86,10 +99,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         this.isChatOpen.set(true);
         this.cdr.detectChanges();
 
-        // foca no botão de fechar do painel
-        const closeBtn = document.querySelector<HTMLButtonElement>(
-            '.chat-topbar .chat-close'
-        );
+        const closeBtn = document.querySelector<HTMLButtonElement>('.chat-topbar .chat-close');
         closeBtn?.focus();
     };
 
@@ -113,7 +123,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         const fragment = this.route.snapshot.fragment;
         if (fragment) this.scrollTo(fragment);
 
-        // 3) re-rolar ao navegar entre rotas/fragmentos
+        // 3) re-rolar ao navegar
         this.sub = this.router.events
             .pipe(filter((e) => e instanceof NavigationEnd))
             .subscribe(() => {
@@ -137,14 +147,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
         if (!VALID_SECTIONS.includes(targetSection as Section)) return;
 
-        // espera o DOM estabilizar para calcular posição corretamente
         requestAnimationFrame(() => {
             const el = document.getElementById(targetSection as string);
             if (!el) return;
 
-            // offset do header fixo (se existir). Você pode ajustar via CSS var global.
             const headerHeightPx = this.readCssVarInt('--header-height', 80);
-            this.scrollIntoViewWithOffset(el, headerHeightPx + 12); // 12px de respiro
+            this.scrollIntoViewWithOffset(el, headerHeightPx + 12);
         });
     }
 

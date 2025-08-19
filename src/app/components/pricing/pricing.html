@@ -45,7 +45,7 @@
                         tabindex="{{ isActive(i) ? 0 : -1 }}"
                         (click)="selectPlan(i)"
                 >
-                    <span class="pill-index">{{ p.order | number: '2.0' }}</span>
+                    <span class="pill-index">{{ p.order | number:'2.0-0' }}</span>
                     <span class="pill-name notranslate">{{ p.name }}</span>
                 </button>
 
@@ -105,10 +105,17 @@
                     </div>
 
                     <div class="plan-action">
-                        <a href="#precos" class="btn" [ngClass]="btnClass(currentPlan().featured)">
+                        <button
+                                type="button"
+                                class="btn"
+                                [ngClass]="btnClass(currentPlan().featured)"
+                                (click)="pickAndChat()"
+                                aria-label="Prosseguir com o plano selecionado"
+                        >
                             <i class="bi bi-rocket-takeoff-fill me-1" aria-hidden="true"></i>
                             Quero fazer parte agora
-                        </a>
+                        </button>
+
                         <div class="cta-microcopy">
                             <i class="bi bi-shield-lock" aria-hidden="true"></i>
                             Risco zero: garantia de 7 dias.

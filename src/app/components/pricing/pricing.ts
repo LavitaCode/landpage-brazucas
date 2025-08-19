@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {PlanSelectionService} from "../../services/plan-selection.service";
+
 
 interface Plan {
   id: 'individual' | 'standard' | 'sos';
@@ -28,6 +30,8 @@ type PlanTheme = {
   styleUrls: ['./pricing.scss'],
 })
 export class PricingComponent {
+  constructor(private readonly planSvc: PlanSelectionService) {}
+
   /** Três planos */
   readonly plans: ReadonlyArray<Plan> = [
     {
@@ -129,7 +133,7 @@ export class PricingComponent {
       this.selectedIndex = this.selectedIndex === last ? 0 : this.selectedIndex + 1;
     }
     if (key === 'Home') { event.preventDefault(); this.selectedIndex = 0; }
-    if (key === 'End') { event.preventDefault(); this.selectedIndex = last; }
+    if (key === 'End')  { event.preventDefault(); this.selectedIndex = last; }
   }
 
   /* ===== Helpers ===== */
@@ -157,6 +161,17 @@ export class PricingComponent {
   priceAmount(val: string | number): string {
     const s = String(val ?? '').trim();
     return s.replace(/^[^\d]+/, '').trim();
+  }
+
+  /** CTA: salva o plano e pede para abrir o chat no fluxo de checkout */
+  pickAndChat(): void {
+    const p = this.currentPlan();
+    this.planSvc.selectAndRequestChat({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      period: p.period,
+    });
   }
 
   /* A11y/trackers */

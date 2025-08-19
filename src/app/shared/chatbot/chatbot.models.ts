@@ -1,4 +1,3 @@
-// src/app/shared/chatbot/chatbot.models.ts
 export type Sector = 'financeiro' | 'academico' | 'comercial' | 'outros';
 
 export type ActionType =
@@ -43,8 +42,17 @@ export interface ChatMsgTemplate {
 export interface ChatNodeOption {
     id: string;
     label: string;
+
+    /** ação direta (ex.: abrir link do Stripe/WhatsApp) */
+    action?: Action;
+
+    /** fluxo baseado em resolução */
     resolutionId?: string;
+
+    /** navegação */
     nextNodeId?: string;
+
+    /** atalho de WhatsApp por setor */
     whatsappSector?: Sector;
 }
 

@@ -1,5 +1,4 @@
-// src/app/shared/chatbot/engine.service.ts
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, signal, inject } from '@angular/core';
 import {
     Action,
     ChatMessage,
@@ -12,9 +11,13 @@ import {
 import { FLOW } from './flow';
 import { RESOLUTIONS, WHATSAPP } from './kb';
 import { TEMPLATES } from './templates';
+import {PlanSelectionService} from "../../services/plan-selection.service";
+
 
 @Injectable({ providedIn: 'root' })
 export class ChatEngineService {
+    private readonly planSvc = inject(PlanSelectionService);
+
     private readonly nodes = new Map<string, ChatNode>(
         (FLOW as ChatNode[]).map((n: ChatNode) => [n.id, n] as const),
     );
@@ -41,14 +44,58 @@ export class ChatEngineService {
         this.pushBot(this.renderTemplate('welcome'));
     }
 
+    // ==========================================================
+    // API pública: inicia fluxo de checkout com o plano escolhido
+    // ==========================================================
+    beginCheckoutFromSelectedPlan(): void {
+        const plan = this.planSvc.plan() /* computed */;
+
+        const params = {
+            plan:   plan?.name ?? '—',
+            price:  plan?.price ?? '—',
+            period: plan?.period ?? '—',
+        };
+
+        const node: ChatNode = {
+            id: 'node-checkout',
+            templateId: 'checkout-intro',
+            templateParams: params,
+            options: [
+                {
+                    id: 'co-pay',
+                    label: 'Pagar agora (Stripe)',
+                    action: {
+                        type: 'openLink',
+                        label: 'Ir para Checkout',
+                        // Troque por sua rota/Payment Link quando o Stripe estiver pronto:
+                        url: `/inscricao?plan=${encodeURIComponent((plan?.id as string) ?? '')}`,
+                    },
+                },
+                {
+                    id: 'co-whats',
+                    label: 'Falar com atendimento (WhatsApp)',
+                    action: {
+                        type: 'whatsapp',
+                        label: 'WhatsApp Comercial',
+                        url: `${WHATSAPP.comercial}?text=${this.planSvc.whatsappText()}`,
+                    },
+                },
+                { id: 'co-more', label: 'Ver outros planos', nextNodeId: 'node-com' },
+                { id: 'co-home', label: 'Início',           nextNodeId: 'start' },
+            ],
+        };
+
+        this.nodes.set(node.id, node);
+        this.goto(node.id, true);
+    }
+
+    // ========================== fluxo padrão ==========================
     private renderTemplate(id: string, params?: Record<string, string | number>): string {
         const tpl = this.templates.get(id);
         if (!tpl) return '[template ausente]';
         let text = tpl.text;
         if (params) {
-            for (const [k, v] of Object.entries(params)) {
-                text = text.replaceAll(`{{${k}}}`, String(v));
-            }
+            for (const [k, v] of Object.entries(params)) text = text.replaceAll(`{{${k}}}`, String(v));
         }
         return text;
     }
@@ -60,7 +107,13 @@ export class ChatEngineService {
     choose(option: ChatNodeOption): void {
         this.pushUser(option.label);
 
-        // 1) atendimento humano
+        // 0) ação direta (ex.: Stripe / WhatsApp)
+        if (option.action) {
+            this.exec(option.action, true);
+            return;
+        }
+
+        // 1) atendimento humano por setor
         if (option.whatsappSector) {
             const url = this.whatsappFor(option.whatsappSector);
             if (url) window.open(url, '_blank', 'noopener');
@@ -90,20 +143,18 @@ export class ChatEngineService {
                 const hints = rsp.finalActions.map((a) => `• ${a.label}`).join('\n');
                 this.pushBot('Ações finais disponíveis:\n' + hints);
 
-                this.currentNodeId.set('done');
-
                 const virtual: ChatNode = {
                     id: 'done',
                     templateId: 'done',
                     options: rsp.finalActions.map((a, i): ChatNodeOption => ({
                         id: `final-${i}`,
                         label: a.label,
-                        resolutionId: `${rsp.id}::final::${i}`,
+                        action: a, // agora usamos ação direta
                     })),
                 };
 
                 this.nodes.set('done', virtual);
-                this.pushBot(this.renderTemplate('done'));
+                this.goto('done', true);
                 return;
             }
 
@@ -121,7 +172,7 @@ export class ChatEngineService {
         this.goto('start', true);
     }
 
-    // trata clique em ações finais (resolutionId no formato rspId::final::idx)
+    // (mantido para compatibilidade com flows legados que usem "::final::")
     handleFinalAction(option: ChatNodeOption): boolean {
         if (!option.resolutionId?.includes('::final::')) return false;
         const [rspId, , idxStr] = option.resolutionId.split('::');
