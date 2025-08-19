@@ -1,68 +1,106 @@
 <!-- src/app/pages/pricing/pricing.html -->
-<section class="pricing section" id="planos">
+<section class="pricing section" id="planos" aria-labelledby="pricing-title">
     <div class="container">
-        <div class="section-header text-center">
+        <header class="section-header text-center">
             <div class="section-badge">
                 <i class="bi bi-stars" aria-hidden="true"></i>
-                <span>{{ content.pricing.badge }}</span>
+                <span>OS PLANOS</span>
             </div>
-            <h2 class="section-title">{{ content.pricing.title }}</h2>
-            <p class="section-description">{{ content.pricing.subtitle }}</p>
-        </div>
+            <h2 id="pricing-title" class="section-title"><span class="notranslate">Brazucas no Board</span></h2>
+            <p class="section-description">Escolha o plano que melhor se adapta às suas necessidades.</p>
+        </header>
 
         <div class="pricing-features">
             <div class="feature-badges">
                 <div class="feature-badge">
                     <i class="bi bi-shield-check" aria-hidden="true"></i>
-                    <span>{{ content.pricing.guarantee }}</span>
+                    <span>Garantia de 7 dias</span>
                 </div>
                 <div class="feature-badge alt">
                     <i class="bi bi-lock-fill" aria-hidden="true"></i>
-                    <span>{{ content.pricing.secure }}</span>
+                    <span>Compra segura</span>
                 </div>
             </div>
         </div>
 
-        <div class="pricing-grid">
-            <div class="pricing-card card" [class.featured]="content.pricing.plan.featured">
-                <div class="plan-header">
-                    <div class="plan-badge" *ngIf="content.pricing.plan.badge">
-                        <i class="bi bi-fire" aria-hidden="true"></i>
-                        {{ content.pricing.plan.badge }}
+        <div class="pricing-tabs-grid">
+            <nav class="tabs-rail"
+                 role="tablist"
+                 aria-label="Planos disponíveis"
+                 (keydown)="onTabsKeydown($event)">
+                <button
+                        type="button"
+                        class="tab-pill"
+                        *ngFor="let p of plans; let i = index; trackBy: trackByIndex"
+                        [class.active]="isActive(i)"
+                        role="tab"
+                        [id]="tabId(i)"
+                        [attr.aria-selected]="isActive(i)"
+                        [attr.aria-controls]="panelId(i)"
+                        tabindex="{{ isActive(i) ? 0 : -1 }}"
+                        (click)="selectPlan(i)">
+                    <span class="pill-index">{{ p.order | number:'2.0' }}</span>
+                    <span class="pill-name notranslate">{{ p.name }}</span>
+                </button>
+
+                <div class="trust-badges" aria-hidden="true">
+                    <div class="trust-item">
+                        <i class="bi bi-shield-check" aria-hidden="true"></i>
+                        <span>Garantia de 7 dias</span>
                     </div>
-                    <h3 class="plan-name">
-                        <i class="bi bi-award-fill me-1 text-primary" aria-hidden="true"></i>
-                        {{ content.pricing.plan.title }}
-                    </h3>
-                    <p class="plan-description">{{ content.pricing.plan.description }}</p>
-                </div>
-
-                <div class="plan-price">
-                    <div class="price-amount">
-                        <span class="currency">{{ priceSymbol(content.pricing.plan.price) }}</span>
-                        <span class="amount">{{ priceAmount(content.pricing.plan.price) }}</span>
+                    <div class="trust-item">
+                        <i class="bi bi-truck" aria-hidden="true"></i>
+                        <span>Compra segura</span>
                     </div>
-                    <div class="price-period">{{ content.pricing.plan.period }}</div>
                 </div>
+            </nav>
 
-                <div class="plan-features">
-                    <ul>
-                        <li *ngFor="let feature of content.pricing.plan.features">
-                            <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
-                            <span>{{ feature }}</span>
-                        </li>
-                    </ul>
-                </div>
+            <section class="tab-panel"
+                     role="tabpanel"
+                     [id]="panelId(selectedIndex)"
+                     [attr.aria-labelledby]="tabId(selectedIndex)">
+                <article class="pricing-card card" [class.featured]="currentPlan().featured">
+                    <header class="plan-header">
+                        <div class="plan-badge" *ngIf="currentPlan().badge">
+                            <i class="bi bi-fire" aria-hidden="true"></i>
+                            {{ currentPlan().badge }}
+                        </div>
+                        <h3 class="plan-name notranslate">
+                            <i class="bi bi-award-fill me-1 text-primary" aria-hidden="true"></i>
+                            {{ currentPlan().name }}
+                        </h3>
+                        <p class="plan-description">
+                            {{ currentPlan().description }}
+                        </p>
+                    </header>
 
-                <div class="plan-action">
-                    <a href="#"
-                       class="btn"
-                       [ngClass]="btnClass(content.pricing.plan.featured)">
-                        <i class="bi bi-rocket-takeoff-fill me-1" aria-hidden="true"></i>
-                        {{ content.hero.buttons.apply }}
-                    </a>
-                </div>
-            </div>
+                    <div class="plan-price">
+                        <div class="price-amount">
+                            <span class="currency">{{ priceSymbol(currentPlan().price) }}</span>
+                            <span class="amount">{{ priceAmount(currentPlan().price) }}</span>
+                        </div>
+                        <div class="price-period">{{ currentPlan().period }}</div>
+                    </div>
+
+                    <div class="plan-features">
+                        <ul>
+                            <li *ngFor="let feature of currentPlan().features; trackBy: trackByIndex">
+                                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+                                <span>{{ feature }}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="plan-action">
+                        <a href="#"
+                           class="btn"
+                           [ngClass]="btnClass(currentPlan().featured)">
+                            <i class="bi bi-rocket-takeoff-fill me-1" aria-hidden="true"></i>
+                            Quero fazer parte agora
+                        </a>
+                    </div>
+                </article>
+            </section>
         </div>
 
         <div class="pricing-guarantee text-center">
@@ -70,9 +108,9 @@
                 <div class="guarantee-icon">
                     <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
                 </div>
-                <h3 class="guarantee-title">{{ content.pricing.protection.title }}</h3>
+                <h3 class="guarantee-title">Você está totalmente protegido!</h3>
                 <p class="guarantee-text">
-                    {{ content.pricing.protection.description }}
+                    Durante 7 dias, garantia incondicional: avalie e, se não for para você, devolvemos o valor.
                 </p>
             </div>
         </div>
@@ -80,10 +118,10 @@
         <div class="pricing-savings text-center">
             <h3 class="savings-title">
                 <i class="bi bi-piggy-bank-fill me-1" aria-hidden="true"></i>
-                {{ content.pricing.savings.title }}
+                Você economiza escolhendo o plano ideal
             </h3>
             <p class="savings-description">
-                {{ content.pricing.savings.description }}
+                Um investimento que se paga com o primeiro mês atuando nos EUA.
             </p>
         </div>
     </div>

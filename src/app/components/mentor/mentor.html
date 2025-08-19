@@ -1,79 +1,58 @@
-<section class="mentor section" id="mentor">
-  <div class="container">
-    <div class="section-header text-center">
-      <div class="section-badge">
-        <span>{{ content.mentor.badge }}</span>
-      </div>
-      <h2 class="section-title">
-        {{ content.mentor.title }}
-      </h2>
-    </div>
-    
-    <div class="mentor-content">
-      <div class="mentor-image">
-        <div class="image-placeholder">
-          <!-- Placeholder para foto do mentor -->
-          <i class="fas fa-user-tie mentor-icon" aria-hidden="true"></i>
-        </div>
-        <div class="mentor-credentials">
-          <div class="credential">
-            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-            <span>{{ content.mentor.stats.experience }}</span>
-          </div>
-          <div class="credential">
-            <i class="fas fa-users" aria-hidden="true"></i>
-            <span>{{ content.mentor.stats.students }}</span>
-          </div>
-          <div class="credential">
-            <i class="fas fa-trophy" aria-hidden="true"></i>
-            <span>{{ content.mentor.stats.position }}</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mentor-info">
-        <h3 class="mentor-name">{{ content.mentor.name }}</h3>
-        <!-- <p class="mentor-title">{{ content.mentor.title }}</p> -->
-        
-        <div class="mentor-description">
-          <p>
-            {{ content.mentor.description }}
-          </p>
-          
-          <!-- <p>
-            Eu já estive onde você está agora e posso te garantir: é possível romper a barreira que te impede 
-            de ter essa vida tão sonhada neste país maravilhoso. Já foram mais de 10 alunos através do método 
-            Brazucas no Board.
-          </p>
-           -->
-          <p class="mentor-highlight">
-            {{ content.mentor.highlight }}
-          </p>
-        </div>
-        
-        <div class="mentor-journey">
-          <h4>{{ content.mentor.journey.title }}</h4>
-          <div class="journey-steps">
-            <div class="journey-step" *ngFor="let step of content.mentor.journey.steps">
-              <!-- <div class="step-icon">
-                <i class="fas fa-plane" aria-hidden="true"></i>
-              </div> -->
-              <div class="step-content">
-                <h5>{{ step.title }}</h5>
-                <p>{{ step.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- <div class="mentor-cta">
-          <a href="#planos" class="btn btn-primary btn-large">
-            {{ content.hero.buttons.apply }}
-          </a>
-        </div> -->
-        
-      </div>
-    </div>
-  </div>
-</section>
+<!-- src/app/pages/mentor/mentor.html -->
+<section class="mentor section" id="mentor" aria-labelledby="mentor-title">
+    <div class="container">
+        <header class="section-header text-center">
+            <span class="section-badge">{{ badgeText }}</span>
+            <h2 id="mentor-title" class="section-title">{{ sectionTitle }}</h2>
+        </header>
 
+        <div class="mentor-content">
+            <!-- Coluna da imagem + credenciais -->
+            <div class="mentor-visual">
+                <figure class="avatar">
+                    <img [src]="photoSrc" [alt]="photoAlt" loading="lazy" decoding="async" />
+                    <figcaption class="sr-only notranslate">{{ name }}</figcaption>
+                </figure>
+
+                <ul class="credentials" role="list" aria-label="Principais credenciais do mentor">
+                    <li class="credential" *ngFor="let s of stats; trackBy: trackByIndex" role="listitem">
+                        <i class="fas" [ngClass]="s.icon" aria-hidden="true"></i>
+                        <span class="credential-text">{{ s.label }}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Coluna do conteúdo -->
+            <div class="mentor-info">
+                <h3 class="mentor-name notranslate">{{ name }}</h3>
+                <p class="mentor-role">{{ role }}</p>
+
+                <div class="mentor-description">
+                    <p>{{ description }}</p>
+                    <p class="mentor-highlight">
+                        {{ highlight }}
+                    </p>
+                </div>
+
+                <section class="mentor-journey" aria-labelledby="journey-title">
+                    <h4 id="journey-title" class="journey-title">{{ journeyTitle }}</h4>
+                    <ol class="journey-steps" role="list">
+                        <li class="journey-step" *ngFor="let step of journeySteps; trackBy: trackByIndex">
+                            <div class="step-dot" aria-hidden="true"></div>
+                            <div class="step-card">
+                                <h5 class="step-title">{{ step.title }}</h5>
+                                <p class="step-text" [innerHTML]="step.description"></p>
+                            </div>
+                        </li>
+                    </ol>
+                </section>
+
+                <!-- CTA opcional
+                <div class="mentor-cta">
+                  <a href="#planos" class="btn btn-primary btn-large">Quero começar agora</a>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+</section>

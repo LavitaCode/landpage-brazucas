@@ -1,26 +1,56 @@
+<!-- src/index.html -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <title>Brazucas no Board - Curso Preparatório INBDE</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Curso preparatório para validação do diploma de odontologia nos Estados Unidos. Método validado por dentistas aprovados no INBDE.">
-  <meta name="keywords" content="INBDE, odontologia, Estados Unidos, validação diploma, dentista, curso preparatório">
-  <link rel="icon" type="image/png" href="logo-vertical-azul-medio-positivo.png">
+    <meta charset="utf-8">
+    <title>Brazucas no Board - Curso Preparatório INBDE</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Curso preparatório para validação do diploma de odontologia nos Estados Unidos. Método validado por dentistas aprovados no INBDE.">
+    <meta name="keywords" content="INBDE, odontologia, Estados Unidos, validação diploma, dentista, curso preparatório">
+    <link rel="icon" type="image/png" href="logo-vertical-azul-medio-positivo.png">
 
-  
-  <!-- Google Fonts -->
-   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Ajustes visuais para o Website Translator do Google (mantém a página limpa) -->
+    <style>
+        #goog-gt-tt { display: none !important; visibility: hidden !important; }
+        .goog-te-banner-frame { display: none !important; }
+        .goog-te-gadget-icon { display: none !important; }
+        .goog-te-menu-value span:nth-child(5) { display: none !important; }
+        body { top: 0 !important; }
+        #google_translate_element { position: absolute; left: -9999px; top: -9999px; }
+    </style>
+
+    <!-- Hook global exigido pelo script do Google. Mantém o widget oculto porém funcional. -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            if (window.google && window.google.translate && window.google.translate.TranslateElement) {
+                // eslint-disable-next-line no-undef
+                new google.translate.TranslateElement(
+                    {
+                        pageLanguage: 'pt',
+                        includedLanguages: 'pt,en,es',
+                        autoDisplay: false
+                    },
+                    'google_translate_element'
+                );
+            }
+            window.__googleTranslateReady__ = true;
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-  <app-root></app-root>
+<app-root></app-root>
+
+<!-- Container oculto necessário para o Website Translator -->
+<div id="google_translate_element" aria-hidden="true"></div>
 </body>
 </html>
-

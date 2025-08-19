@@ -1,33 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/components/header/header.ts
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LanguageService, LanguageContent } from '../../services/language.service';
+import { RouterLink } from '@angular/router';
+import {LangSwitcherComponent} from "../../core/i18n/components/lang-switcher/lang-switcher.component";
+import {LanguageService} from "../../services/language.service";
+import {Language} from "../../shared/models/language.model";
+
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, LangSwitcherComponent],
   templateUrl: './header.html',
-  styleUrl: './header.scss'
+  styleUrls: ['./header.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+  private readonly langService = inject(LanguageService);
+
+  readonly currentLanguage = computed<Language>(() => this.langService.currentLang());
+
   isMenuOpen = false;
-  content!: LanguageContent;
-  currentLanguage: string = 'pt';
-
-  availableLanguages = [
-    { code: 'pt', name: 'Português', emoji: '🇧🇷' },
-    { code: 'es', name: 'Español', emoji: '🇪🇸' },
-    { code: 'en', name: 'English', emoji: '🇺🇸' },
-  ];
-
-  constructor(private languageService: LanguageService) {}
-
-  ngOnInit(): void {
-    this.languageService.currentLanguage$.subscribe(lang => {
-      this.currentLanguage = lang;
-      this.content = this.languageService.getContent();
-    });
-  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -36,11 +28,4 @@ export class HeaderComponent implements OnInit {
   closeMenu(): void {
     this.isMenuOpen = false;
   }
-
-  onLanguageChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.languageService.setLanguage(selectElement.value);
-  }
 }
-
-

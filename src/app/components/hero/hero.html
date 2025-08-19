@@ -1,61 +1,51 @@
-<!-- src/app/pages/hero/hero.html (ou src/app/components/hero/hero.html) -->
-<section class="hero" id="inicio">
+<!-- src/app/pages/hero/hero.html -->
+<section class="hero" id="inicio" aria-labelledby="hero-title">
     <div class="container">
         <div class="hero-content">
             <div class="hero-text">
-                <div class="hero-badge">
+                <div class="hero-badge" aria-live="polite">
                     <i class="fas fa-star" aria-hidden="true"></i>
-                    <span>Vagas abertas para a formação</span>
+                    <span>{{ badgeText }}</span>
                 </div>
 
-                <h1 class="hero-title fade-in-up">
-                    {{ content.hero.title }}
-                    <span class="highlight">{{ content.hero.subtitle }}</span>
+                <h1 id="hero-title" class="hero-title fade-in-up">
+                    {{ title }}
+                    <span class="highlight">{{ subtitle }}</span>
                 </h1>
 
                 <p class="hero-description fade-in-up">
-                    {{ content.hero.description }}
+                    {{ description }}
                 </p>
 
-                <div class="hero-actions fade-in-up">
-                    <a href="#planos" class="btn btn-primary btn-large">
+                <div class="hero-actions fade-in-up" role="group" aria-label="Ações principais">
+                    <a href="#planos" class="btn btn-primary btn-large" aria-label="Ver planos e garantir vaga">
                         <i class="fas fa-rocket" aria-hidden="true"></i>
-                        {{ content.hero.buttons.apply }}
+                        {{ applyLabel }}
                     </a>
-                    <a href="#sobre" class="btn btn-outline btn-large">
+                    <a href="#sobre" class="btn btn-outline btn-large" aria-label="Saber mais sobre o curso">
                         <i class="fas fa-play-circle" aria-hidden="true"></i>
-                        {{ content.hero.buttons.learnMore }}
+                        {{ learnMoreLabel }}
                     </a>
                 </div>
 
-                <div class="hero-stats fade-in-up">
-                    <div class="stat">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">{{ content.hero.stats.students }}</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">19</div>
-                        <div class="stat-label">{{ content.hero.stats.experience }}</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">{{ content.hero.stats.method }}</div>
+                <div class="hero-stats fade-in-up" role="list" aria-label="Indicadores do curso">
+                    <div class="stat" *ngFor="let s of stats; trackBy: trackByIndex" role="listitem">
+                        <div class="stat-number">{{ s.value }}</div>
+                        <div class="stat-label">{{ s.label }}</div>
                     </div>
                 </div>
             </div>
 
-            <div class="hero-image fade-in">
+            <div class="hero-image fade-in" aria-hidden="true">
                 <div class="image-container">
                     <div class="image-placeholder">
-                        <!-- Imagem real substituindo o placeholder -->
                         <img
-                                src="assets/img1.png"
-                                alt="Imagem destaque"
+                                [src]="heroImageSrc"
+                                [alt]="heroImageAlt"
                                 class="hero-img"
                                 loading="eager"
                                 decoding="async"
                         />
-                        <!-- Overlay decorativo -->
                         <div class="image-overlay">
                             <div class="floating-element floating-1">
                                 <i class="fas fa-graduation-cap" aria-hidden="true"></i>
@@ -74,8 +64,7 @@
         </div>
     </div>
 
-    <!-- Background decorative elements -->
-    <div class="hero-bg">
+    <div class="hero-bg" aria-hidden="true">
         <div class="bg-shape bg-shape-1"></div>
         <div class="bg-shape bg-shape-2"></div>
         <div class="bg-shape bg-shape-3"></div>

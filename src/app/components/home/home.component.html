@@ -2,15 +2,39 @@
 <app-header></app-header>
 
 <main class="home-main">
-    <section id="hero" class="home-section"><app-hero></app-hero></section>
-    <section id="beneficios" class="home-section alt"><app-benefits></app-benefits></section>
-    <section id="depoimentos" class="home-section"><app-testimonials></app-testimonials></section>
-    <section id="precos" class="home-section alt"><app-pricing></app-pricing></section>
-    <section id="mentor" class="home-section"><app-mentor></app-mentor></section>
+    <section id="hero" class="home-section">
+        <app-hero></app-hero>
+    </section>
+
+    <section id="sobre" class="home-section alt">
+        <app-course-overview></app-course-overview>
+    </section>
+
+    <section id="beneficios" class="home-section alt">
+        <app-benefits></app-benefits>
+    </section>
+
+    <section id="depoimentos" class="home-section">
+        <app-testimonials></app-testimonials>
+    </section>
+
+    <!-- alias suportado: #planos -> #precos -->
+    <section id="precos" class="home-section alt">
+        <app-pricing></app-pricing>
+    </section>
+
+    <section id="mentor" class="home-section">
+        <app-mentor></app-mentor>
+    </section>
+
+    <section id="equipe" class="home-section alt">
+        <app-about></app-about>
+    </section>
+
     <app-footer></app-footer>
 </main>
 
-<!-- ESCONDE o launcher quando o chat estiver ABERTO -->
+<!-- Botão flutuante do chat -->
 <app-chatbot-launcher
         *ngIf="!isChatOpen()"
         imgSrc="assets/dente-callcenter.png"
@@ -21,25 +45,35 @@
         (launch)="openChat()">
 </app-chatbot-launcher>
 
-<div class="chat-backdrop" *ngIf="isChatOpen()" (click)="closeChat()" aria-hidden="true"></div>
+<!-- Backdrop -->
+<div
+        class="chat-backdrop"
+        *ngIf="isChatOpen()"
+        (click)="closeChat()"
+        aria-hidden="true">
+</div>
 
-<div class="chat-panel"
-     *ngIf="isChatOpen()"
-     role="dialog"
-     aria-modal="true"
-     aria-label="Atendimento por chat">
-
-    <!-- Topbar (avatar + balão AO LADO do X) -->
+<!-- Painel de chat (dialog a11y) -->
+<div
+        class="chat-panel"
+        *ngIf="isChatOpen()"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Atendimento por chat">
     <div class="chat-topbar">
         <div class="chat-top-indicator" aria-hidden="true">
-            <img src="assets/dente-callcenter.png" alt="Assistente virtual" class="top-avatar" />
+            <img
+                    src="assets/dente-callcenter.png"
+                    alt="Assistente virtual"
+                    class="top-avatar" />
             <div class="top-bubble">
                 <span>Fale conosco</span>
                 <span class="top-bubble-arrow" aria-hidden="true"></span>
             </div>
         </div>
 
-        <button type="button"
+        <button
+                type="button"
                 class="btn chat-close btn-icon"
                 (click)="closeChat()"
                 aria-label="Fechar chat">

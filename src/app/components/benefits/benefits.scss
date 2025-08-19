@@ -1,118 +1,402 @@
 /* src/app/pages/benefits/benefits.scss */
-.benefits { background-color: var(--white); }
+/* =======================================================================================
+   ESTILOS “BENEFÍCIOS” – VERSÃO PREMIUM ORIENTADA A MARKETING PARA UM CURSO DE ODONTOLOGIA
+   Princípios aplicados:
+   - Psicologia de cores (azuis confiáveis + acentos “smile mint” para ação)
+   - Hierarquia visual forte (título central, cards balanceados, CTA destacado)
+   - Microinterações (hover com elevação, brilho, “shine” controlado)
+   - Acessibilidade (contraste, foco visível, reduced-motion)
+   - Clean design (clínico, luminoso, esterilizado, sem ruído visual)
+   ======================================================================================= */
 
-.section-header { margin-bottom: var(--spacing-xxl); }
+/* =========================================
+   TOKENS DO TEMA (PALETA ODONTOLOGIA)
+   ========================================= */
+:host {
+  /* Cores de texto */
+  --c-text: #0f172a;                          /* Slate-900 */
+  --c-text-weak: #334155;                     /* Slate-700 */
+  --c-text-muted: #475569;                    /* Slate-600 */
 
-.section-badge {
-  display: inline-block;
-  background-color: var(--primary-blue-light);
-  color: var(--primary-blue);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--border-radius-xl);
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: var(--spacing-md);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  /* Brand (confiança clínica) */
+  --c-brand-700: #1d4ed8;                     /* Blue-700 */
+  --c-brand-800: #1e40af;                     /* Blue-800 */
+  --c-brand-600: #2563eb;                     /* Blue-600 */
+  --c-brand-300: #93c5fd;                     /* Blue-300 */
+
+  /* “Smile mint” para acentos positivos de saúde */
+  --c-mint-500: #10b981;                      /* Emerald-500 */
+  --c-mint-600: #059669;                      /* Emerald-600 */
+
+  /* Superfícies */
+  --c-surface: #ffffff;
+  --c-surface-alt: #eef6ff;                   /* Azul leitoso suave */
+  --c-surface-card: #ffffff;
+
+  /* Realces suaves (higiene, luminosidade clínica) */
+  --c-glow-1: rgba(16, 185, 129, .18);        /* Mint glow */
+  --c-glow-2: rgba(37, 99, 235, .22);         /* Blue glow */
+  --c-ring: rgba(37, 99, 235, .18);
+
+  /* Gradientes */
+  --g-ice: radial-gradient(1200px 600px at 50% -10%, #eaf3ff 0%, transparent 60%),
+  radial-gradient(900px 420px at 15% 20%, #f1fbff 0%, transparent 55%),
+  radial-gradient(800px 420px at 85% 25%, #f3fff9 0%, transparent 55%);
+
+  /* Bordas e raios */
+  --radius-card: 18px;
+  --radius-pill: 14px;
+  --border-soft: color-mix(in oklab, var(--c-brand-700) 10%, #ffffff);
+
+  /* Sombras (camadas) */
+  --shadow-sm: 0 2px 10px rgba(2, 6, 23, .06);
+  --shadow-md: 0 10px 24px rgba(2, 6, 23, .08);
+  --shadow-lg: 0 18px 48px rgba(2, 6, 23, .12);
+
+  /* Timing */
+  --t-fast: .15s;
+  --t-norm: .28s;
+  --t-slow: .6s;
 }
 
-.section-title {
-  font-size: 2.5rem;
-  color: var(--primary-blue-dark);
-  margin-bottom: 0;
-  @media (max-width: 768px) { font-size: 2rem; }
-}
-
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--spacing-xl);
-  margin-bottom: var(--spacing-xxl);
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-  }
-}
-
-.benefit-card {
-  text-align: center;
-  padding: var(--spacing-xl);
-  border: 2px solid transparent;
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
-  cursor: pointer;
-  border-radius: var(--border-radius-md);
-  background: #fff;
-
-  &:hover {
-    border-color: var(--primary-blue-light);
-    transform: translateY(-8px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    .benefit-icon { transform: scale(1.06); }
-  }
-}
-
-.benefit-icon {
-  width: 84px;
-  height: 84px;
-  margin: 0 auto var(--spacing-md);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
+/* =========================================
+   SEÇÃO + CONTAINER
+   ========================================= */
+.section {
+  position: relative;
+  padding: clamp(3.25rem, 5vw, 5.5rem) 0;
+  color: var(--c-text);
   background:
-          radial-gradient(closest-side, #ffffff 0 62%, transparent 62%),
-          linear-gradient(135deg, var(--primary-blue-light) 0%, var(--primary-blue) 100%);
-  box-shadow: 0 10px 22px rgba(13, 110, 253, 0.18);
-  transition: transform var(--transition-normal);
-
-  i.bi {
-    font-size: 1.9rem;
-    color: var(--primary-blue-dark);
-    filter: drop-shadow(0 1px 0 rgba(255,255,255,.45));
-  }
+          linear-gradient(180deg, color-mix(in oklab, #ffffff 85%, #f5faff) 0%, #f6faff 100%),
+          var(--g-ice);
+  isolation: isolate;
 }
 
-.benefit-title {
-  font-size: 1.25rem;
-  color: var(--primary-blue-dark);
-  margin-bottom: var(--spacing-sm);
-  line-height: 1.3;
-}
-
-.benefit-description {
-  color: var(--text-gray);
-  line-height: 1.6;
-  margin-bottom: 0;
-}
-
-/* CTA */
-.benefits-cta {
-  background: linear-gradient(135deg, var(--primary-blue-light) 0%, var(--white) 100%);
-  padding: var(--spacing-xxl);
-  border-radius: var(--border-radius-xl);
-  margin-top: var(--spacing-xxl);
-  @media (max-width: 768px) { padding: var(--spacing-xl) var(--spacing-lg); }
-}
-
-.cta-title {
-  font-size: 2rem;
-  color: var(--primary-blue-dark);
-  margin-bottom: var(--spacing-md);
-  @media (max-width: 768px) { font-size: 1.5rem; }
-}
-
-.cta-description {
-  font-size: 1.1rem;
-  color: var(--text-gray);
-  margin-bottom: var(--spacing-md);
-  max-width: 800px;
+.container {
+  width: min(1120px, 92vw);
   margin-inline: auto;
 }
 
-.btn-large {
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: 1.1rem;
+.text-center { text-align: center; }
+
+/* =========================================
+   CABEÇALHO DA SEÇÃO
+   ========================================= */
+.section-header {
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.section-badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  @media (max-width: 768px) { width: 100%; justify-content: center; }
+  gap: .55rem;
+  padding: .45rem .85rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-brand-700);
+  background:
+          linear-gradient(180deg, color-mix(in oklab, var(--c-brand-300) 25%, #ffffff) 0%, #ffffff 100%);
+  border: 1px solid var(--border-soft);
+  box-shadow:
+          inset 0 -2px 6px rgba(255, 255, 255, .8),
+          0 6px 18px rgba(29, 78, 216, .06);
+}
+
+.section-title {
+  margin: .85rem 0 0;
+  font-size: clamp(1.35rem, 3.4vw, 2rem);
+  line-height: 1.3;
+  font-weight: 900;
+  color: var(--c-brand-800);
+  text-shadow: 0 1px 0 #ffffff;
+}
+
+/* =========================================
+   GRID DE BENEFÍCIOS
+   ========================================= */
+.benefits-grid {
+  margin-top: clamp(1.35rem, 2.2vw, 2.25rem);
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 992px) {
+  .benefits-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* =========================================
+   CARD – MICROINTERAÇÕES E BRILHO “CLÍNICO”
+   ========================================= */
+.card {
+  position: relative;
+  background:
+          linear-gradient(180deg, #ffffff 0%, #fcfeff 100%);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  padding: 1.05rem .95rem 1.1rem;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  align-items: start;
+  text-align: center;
+  transition:
+          transform var(--t-fast) ease,
+          box-shadow var(--t-norm) ease,
+          background var(--t-norm) ease,
+          border-color var(--t-fast) ease;
+  will-change: transform, box-shadow;
+  overflow: hidden;
+}
+
+/* Brilho que percorre o card em hover (efeito “shine”) */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: conic-gradient(
+                  from 180deg at 50% 50%,
+                  rgba(255,255,255,0) 0deg,
+                  rgba(255,255,255,.72) 25deg,
+                  rgba(255,255,255,0) 60deg
+  );
+  transform: translateX(-60%) rotate(8deg);
+  filter: blur(22px);
+  opacity: 0;
+  transition: opacity var(--t-fast) ease, transform var(--t-slow) ease;
+  pointer-events: none;
+}
+
+/* Halo suave para reforçar a sensação “higienizada” de clínica */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+          0 0 0 0 var(--c-ring),
+          0 0 1px 0 rgba(255,255,255,.8) inset;
+  opacity: .0;
+  transition: opacity var(--t-fast) ease, box-shadow var(--t-fast) ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+          0 10px 28px rgba(29, 78, 216, .12),
+          0 18px 48px rgba(2, 6, 23, .10);
+  border-color: color-mix(in oklab, var(--c-brand-700) 22%, #ffffff);
+  background:
+          linear-gradient(180deg, #ffffff 0%, #f9fdff 100%);
+}
+
+.card:hover::before {
+  opacity: 1;
+  box-shadow:
+          0 0 0 6px var(--c-ring),
+          0 0 1px 0 rgba(255,255,255,.85) inset;
+}
+
+.card:hover::after {
+  opacity: 1;
+  transform: translateX(65%) rotate(8deg);
+}
+
+/* Foco acessível */
+.card:focus-within {
+  outline: none;
+  box-shadow:
+          0 0 0 3px #ffffff,
+          0 0 0 6px color-mix(in oklab, var(--c-brand-600) 55%, #a5b4fc),
+          var(--shadow-lg);
+}
+
+/* =========================================
+   ÍCONE (BLISTER LUSTROSO + GLOW)
+   ========================================= */
+.benefit-icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto .7rem auto;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: var(--c-brand-700);
+  background:
+          linear-gradient(180deg, #ffffff 0%, #f3f9ff 100%);
+  border: 1px solid color-mix(in oklab, var(--c-brand-700) 18%, #ffffff);
+  box-shadow:
+          0 1px 0 #ffffff inset,
+          0 -8px 18px rgba(147, 197, 253, .25) inset,
+          0 8px 18px rgba(37, 99, 235, .10);
+  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease, color var(--t-fast) ease;
+}
+
+/* Gloss superior */
+.benefit-icon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 55%);
+  pointer-events: none;
+}
+
+/* Glow suave em hover */
+.card:hover .benefit-icon {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+          0 1px 0 #ffffff inset,
+          0 -10px 22px rgba(147, 197, 253, .32) inset,
+          0 10px 26px rgba(37, 99, 235, .14),
+          0 0 0 6px rgba(37, 99, 235, .08);
+  color: var(--c-brand-800);
+}
+
+.benefit-icon .bi {
+  font-size: 1.25rem;
+  transform: translateY(1px);
+}
+
+/* =========================================
+   TIPOGRAFIA DOS CARDS
+   ========================================= */
+.benefit-title {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--c-text);
+  line-height: 1.35;
+  margin: .3rem 0 .4rem;
+  letter-spacing: .01em;
+}
+
+.benefit-description {
+  margin: 0;
+  color: var(--c-text-muted);
+  font-size: .94rem;
+  line-height: 1.55;
+}
+
+/* =========================================
+   CTA (PERSUASÃO SUAVE + PULSO DISCRETO)
+   ========================================= */
+.benefits-cta {
+  margin-top: clamp(1.9rem, 3.2vw, 3rem);
+}
+
+.cta-title {
+  font-size: 1.18rem;
+  font-weight: 900;
+  color: var(--c-text);
+  margin: 0 0 .4rem 0;
+  text-shadow: 0 1px 0 #ffffff;
+}
+
+.cta-description {
+  color: var(--c-text-weak);
+  margin: 0 auto 1.1rem auto;
+  max-width: 70ch;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: .85rem 1.25rem;
+  font-weight: 900;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+          transform var(--t-fast) ease,
+          box-shadow var(--t-norm) ease,
+          background var(--t-norm) ease,
+          border-color var(--t-fast) ease;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--c-brand-600) 88%, #ffffff) 0%, var(--c-brand-700) 100%);
+  color: #ffffff;
+  border-color: color-mix(in oklab, var(--c-brand-700) 40%, #ffffff);
+  box-shadow:
+          0 1px 0 #ffffff inset,
+          0 8px 18px rgba(29, 78, 216, .28),
+          0 0 0 0 rgba(16, 185, 129, 0); /* reservado ao pulso */
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, var(--c-brand-600) 0%, var(--c-brand-700) 100%);
+  border-color: color-mix(in oklab, var(--c-brand-700) 55%, #ffffff);
+  box-shadow:
+          0 1px 0 #ffffff inset,
+          0 12px 26px rgba(29, 78, 216, .34),
+          0 0 0 8px rgba(16, 185, 129, .10);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow:
+          0 1px 0 #ffffff inset,
+          0 4px 12px rgba(29, 78, 216, .25),
+          0 0 0 6px rgba(16, 185, 129, .08);
+}
+
+/* Pulso sutil que atrai atenção sem agressividade */
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 var(--c-glow-1), 0 0 0 0 var(--c-glow-2); }
+  70%  { box-shadow: 0 0 0 10px rgba(16,185,129,0), 0 0 0 14px rgba(37,99,235,0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0), 0 0 0 0 rgba(37,99,235,0); }
+}
+
+.benefits-cta .btn-primary {
+  animation: pulseRing 2.8s ease-out infinite;
+}
+
+/* Acessibilidade de foco */
+.btn:focus-visible {
+  outline: none;
+  box-shadow:
+          0 0 0 3px #ffffff,
+          0 0 0 6px color-mix(in oklab, var(--c-mint-500) 40%, var(--c-brand-600)),
+          0 8px 24px rgba(2,6,23,.12);
+}
+
+/* =========================================
+   ANIMAÇÃO DE ENTRADA (SUAVE E REFINADA)
+   ========================================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp .5s ease forwards;
+}
+
+/* =========================================
+   REDUCED MOTION (RESPEITO AO USUÁRIO)
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::after,
+  .btn,
+  .fade-in-up {
+    transition: none !important;
+    animation: none !important;
+  }
+  .btn-primary { box-shadow: 0 1px 0 #ffffff inset, 0 8px 18px rgba(29, 78, 216, .28); }
+  .card:hover { transform: none; }
 }

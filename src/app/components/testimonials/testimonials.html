@@ -1,70 +1,96 @@
-<section class="testimonials section" id="depoimentos">
-  <div class="container">
-    <div class="section-header text-center">
-      <div class="section-badge">
-        <span>{{ content.testimonials.badge}}</span>
-      </div>
-      <h2 class="section-title">
-        {{ content.testimonials.title}}
-      </h2>
-    </div>
-    
-    <div class="testimonials-carousel">
-      <div class="testimonials-container" [style.transform]="'translateX(' + (-currentSlide * 100) + '%)'">
-        <div class="testimonial-slide" *ngFor="let testimonial of content.testimonials.items; let i = index">
-          <div class="testimonial-card card">
-            <div class="testimonial-content">
-              <div class="quote-icon">
-                <i class="fas fa-quote-left" aria-hidden="true"></i>
-              </div>
-              <p class="testimonial-text">{{ testimonial.text }}</p>
-              <div class="testimonial-rating">
-                <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]" aria-hidden="true"></i>
-              </div>
+<!-- src/app/pages/testimonials/testimonials.html -->
+<section class="testimonials section" id="depoimentos" aria-labelledby="testimonials-title">
+    <div class="container">
+        <header class="section-header text-center">
+            <div class="section-badge">
+                <span>{{ badgeText }}</span>
             </div>
-            <div class="testimonial-author">
-              <div class="author-avatar">
-                <!-- Placeholder para foto do depoente -->
-                <i class="fas fa-user" aria-hidden="true"></i>
-              </div>
-              <div class="author-info">
-                <h4 class="author-name">{{ testimonial.name }}</h4>
-                <p class="author-title">{{ testimonial.title }}</p>
-                <p class="author-location">{{ testimonial.location }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-controls">
-        <button 
-          class="carousel-btn carousel-prev" 
-          (click)="previousSlide()"
-          [disabled]="currentSlide === 0"
-          aria-label="Depoimento anterior">
-          <i class="fas fa-chevron-left" aria-hidden="true"></i>
-        </button>
-        
-        <div class="carousel-indicators">
-          <button 
-            *ngFor="let testimonial of content.testimonials.items; let i = index"
-            class="indicator"
-            [class.active]="i === currentSlide"
-            (click)="goToSlide(i)"
-            [attr.aria-label]="'Ir para depoimento ' + (i + 1)">
-          </button>
-        </div>
-        
-        <button 
-          class="carousel-btn carousel-next" 
-          (click)="nextSlide()"
-          [disabled]="currentSlide === content.testimonials.items.length - 1"
-          aria-label="Próximo depoimento">
-          <i class="fas fa-chevron-right" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
+            <h2 id="testimonials-title" class="section-title">
+                {{ sectionTitle }}
+            </h2>
+        </header>
 
+        <div class="testimonials-carousel"
+             role="region"
+             aria-roledescription="carousel"
+             [attr.aria-label]="sectionTitle"
+             (mouseenter)="stopAutoSlide()"
+             (mouseleave)="startAutoSlide()"
+             (keydown)="onKeydownCarousel($event)"
+             tabindex="0">
+
+            <div class="testimonials-container"
+                 [style.transform]="transform"
+                 [style.willChange]="'transform'">
+                <div class="testimonial-slide"
+                     *ngFor="let t of testimonials; let i = index; trackBy: trackByIndex"
+                     [attr.aria-roledescription]="'slide'"
+                     [attr.aria-label]="'Depoimento ' + (i + 1) + ' de ' + testimonials.length">
+                    <article class="testimonial-card card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon" aria-hidden="true">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <p class="testimonial-text">
+                                {{ t.text }}
+                            </p>
+                            <div class="testimonial-rating" aria-label="Nota 5 de 5">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+
+                        <footer class="testimonial-author">
+                            <div class="author-avatar" aria-hidden="true">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name"><span class="notranslate">{{ t.name }}</span></h4>
+                                <p class="author-title">{{ t.title }}</p>
+                                <p class="author-location">{{ t.location }}</p>
+                            </div>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button
+                        class="carousel-btn carousel-prev"
+                        type="button"
+                        (click)="previousSlide()"
+                        [attr.aria-label]="'Depoimento anterior'"
+                        [attr.aria-controls]="'depoimentos'"
+                        [disabled]="testimonials.length <= 1">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+
+                <div class="carousel-indicators" role="tablist" aria-label="Selecionar depoimento">
+                    <button
+                            *ngFor="let _ of testimonials; let i = index; trackBy: trackByIndex"
+                            class="indicator"
+                            role="tab"
+                            [class.active]="i === currentSlide"
+                            [attr.aria-selected]="i === currentSlide"
+                            [attr.aria-current]="i === currentSlide ? 'true' : null"
+                            (click)="goToSlide(i)"
+                            [attr.aria-label]="'Ir para depoimento ' + (i + 1)">
+                    </button>
+                </div>
+
+                <button
+                        class="carousel-btn carousel-next"
+                        type="button"
+                        (click)="nextSlide()"
+                        [attr.aria-label]="'Próximo depoimento'"
+                        [attr.aria-controls]="'depoimentos'"
+                        [disabled]="testimonials.length <= 1">
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>

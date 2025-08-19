@@ -1,20 +1,55 @@
+<section class="about-section section" id="equipe" aria-labelledby="about-title">
+    <div class="container">
+        <header class="header">
+            <span class="section-badge">NOSSO TIME</span>
+            <h1 id="about-title" class="section-title">Quem está com você nessa jornada</h1>
+            <p class="section-subtitle">
+                Uma equipe de especialistas comprometida com sua aprovação no
+                <span class="notranslate">INBDE</span> e com sua carreira nos EUA.
+            </p>
+        </header>
 
-<section class="about-section">
-    <h1 class="section-title">Nosso Time</h1>
-
-    <div class="cards-container">
-        <div class="card-small" *ngFor="let card of cards" (click)="openModal(card)">
-            <img [src]="card.img" [alt]="card.name">
+        <div class="cards-container" role="list" aria-label="Equipes e professores">
+            <button
+                    class="card-small"
+                    type="button"
+                    role="listitem"
+                    *ngFor="let card of cards; trackBy: trackByIndex"
+                    (click)="openModal(card)"
+                    [attr.aria-label]="card.name"
+            >
+                <img [src]="card.img" [alt]="card.name" loading="lazy" />
+                <span class="sr-only notranslate">{{ card.name }}</span>
+            </button>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal" *ngIf="selectedCard" (click)="closeModal()">
+    <!-- Modal com narrowing para evitar NG8107 -->
+    <div
+            class="modal"
+            *ngIf="selectedCard as card"
+            (click)="closeModal()"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Detalhes do membro da equipe"
+    >
         <div class="modal-content" (click)="$event.stopPropagation()">
-            <button class="close-btn" (click)="closeModal()">×</button>
-            <h2>{{ selectedCard.name }}</h2>
-            <p>{{ selectedCard.text }}</p>
+            <button class="close-btn" type="button" (click)="closeModal()" aria-label="Fechar">×</button>
+
+            <div class="modal-header">
+                <div class="avatar">
+                    <img [src]="card.img" [alt]="card.name" />
+                </div>
+                <h2 class="modal-title notranslate">{{ card.name }}</h2>
+            </div>
+
+            <div class="modal-body">
+                <p class="bio" [innerHTML]="card.text"></p>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-primary" (click)="closeModal()">Fechar</button>
+            </div>
         </div>
     </div>
 </section>
-

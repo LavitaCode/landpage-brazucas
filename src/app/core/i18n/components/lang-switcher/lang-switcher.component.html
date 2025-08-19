@@ -1,0 +1,14 @@
+<!-- src/app/shared/i18n/lang-switcher.component.html -->
+<div class="lang-switch" role="group" aria-label="Seletor de idioma">
+    <button
+            *ngFor="let l of languages"
+            type="button"
+            class="pill"
+            [class.active]="current() === l.code"
+            [attr.aria-label]="l.aria"
+            [attr.aria-pressed]="current() === l.code"
+            [title]="l.label"
+            (click)="set(l.code)">
+        <span class="flag" aria-hidden="true">{{ l.emoji }}</span>
+    </button>
+</div>

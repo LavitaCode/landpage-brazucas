@@ -1,35 +1,33 @@
 <!-- src/app/pages/benefits/benefits.html -->
-<section class="benefits section" id="beneficios">
+<section class="benefits section" id="beneficios" aria-labelledby="beneficios-title">
     <div class="container">
-        <div class="section-header text-center">
-            <div class="section-badge">
-                <span>{{ content.benefits.subtitle }}</span>
-            </div>
-            <h2 class="section-title">
-                {{ content.benefits.title }}
+        <header class="section-header text-center">
+            <span class="section-badge">OS BENEFÍCIOS</span>
+            <h2 id="beneficios-title" class="section-title">
+                Com o nosso treinamento,<br />
+                você será capaz de:
             </h2>
-        </div>
+        </header>
 
         <div class="benefits-grid">
-            <div
+            <article
                     class="benefit-card card fade-in-up"
-                    *ngFor="let benefit of content.benefits.items; trackBy: trackByIdx; let i = index"
-                    [style.animation-delay]="(i * 0.1) + 's'">
-
-                <div class="benefit-icon">
-                    <i class="bi" [ngClass]="iconFor(benefit.title + ' ' + benefit.description, i)" aria-hidden="true"></i>
+                    *ngFor="let b of benefits; trackBy: trackByIdx; let i = index"
+                    [style.animation-delay]="(i * 0.08) + 's'"
+                    aria-label="Benefício do curso">
+                <div class="benefit-icon" aria-hidden="true">
+                    <i class="bi" [ngClass]="b.icon"></i>
                 </div>
-
-                <h3 class="benefit-title">{{ benefit.title }}</h3>
-                <p class="benefit-description">{{ benefit.description }}</p>
-            </div>
+                <h3 class="benefit-title">{{ b.title }}</h3>
+                <p class="benefit-description">{{ b.description }}</p>
+            </article>
         </div>
 
         <div class="benefits-cta text-center">
-            <h3 class="cta-title">{{ content.benefits.cta.title }}</h3>
-            <p class="cta-description">{{ content.benefits.cta.description }}</p>
-            <a href="#planos" class="btn btn-primary btn-large">
-                {{ content.benefits.cta.button }}
+            <h3 class="cta-title">{{ ctaTitle }}</h3>
+            <p class="cta-description">{{ ctaDescription }}</p>
+            <a href="#planos" class="btn btn-primary btn-large" aria-label="Ir para os planos">
+                {{ ctaButton }}
             </a>
         </div>
     </div>

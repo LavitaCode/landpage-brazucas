@@ -1,55 +1,49 @@
+<!-- src/app/components/header/header.html -->
 <header class="header">
-  <div class="container">
-    <nav class="navbar">
-      
-      <!-- LOGO + SELECTOR WRAPPER -->
-      <div class="navbar-brand">
-        <div class="logo-wrapper">
-          <div class="logo">
-            <a class="navbar-brand" routerLink="/">
-              <img src="assets/img/logo-principal-azul-escuro-positivo.png" alt="Logo Brazucas" class="logo-icon">
-            </a>
-          </div>
-          
-          <!-- SELECTOR DE IDIOMA (vai ao lado da logo no mobile) -->
-          <div class="language-selector">
-            <select (change)="onLanguageChange($event)" [value]="currentLanguage">
-              <option *ngFor="let lang of availableLanguages" [value]="lang.code">
-                {{ lang.emoji }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
+    <div class="container">
+        <nav class="navbar">
 
-      <!-- MENU DE NAVEGAÇÃO -->
-      <div class="navbar-menu" [class.is-active]="isMenuOpen">
-        <a href="#sobre" class="nav-link">{{ content.header.navigation.about }}</a>
-        <a href="#beneficios" class="nav-link">{{ content.header.navigation.benefits }}</a>
-        <a href="#depoimentos" class="nav-link">{{ content.header.navigation.testimonials }}</a>
-        <a href="#planos" class="nav-link">{{ content.header.navigation.plans }}</a>
-        <a href="#mentor" class="nav-link">{{ content.header.navigation.mentor }}</a>
+            <!-- LOGO + SELETOR DE IDIOMA -->
+            <div class="navbar-brand">
+                <div class="logo-wrapper">
+                    <div class="logo">
+                        <a class="navbar-brand" routerLink="/" aria-label="Ir para a página inicial">
+                            <img src="assets/img/logo-principal-azul-escuro-positivo.png" alt="Logo Brazucas" class="logo-icon">
+                        </a>
+                    </div>
 
-        <div class="navbar-actions">
-          <a href="#" class="btn btn-outline">{{ content.header.navigation.studentArea }}</a>
-          <a href="#planos" class="btn btn-primary" (click)="closeMenu()">
-            {{ content.header.navigation.apply }}
-          </a>
-        </div>
-      </div>
+                    <div class="language-selector" aria-label="Seletor de idioma">
+                        <app-lang-switcher></app-lang-switcher>
+                    </div>
+                </div>
+            </div>
 
-      <!-- BOTÃO DE MENU MOBILE -->
-      <button 
-        class="navbar-toggle" 
-        [class.is-active]="isMenuOpen"
-        (click)="toggleMenu()"
-        aria-label="Toggle navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+            <!-- MENU DE NAVEGAÇÃO (texto base em PT; Google Translate aplica EN/ES no DOM) -->
+            <div class="navbar-menu" [class.is-active]="isMenuOpen">
+                <a href="#sobre" class="nav-link">Sobre o Curso</a>
+                <a href="#beneficios" class="nav-link">Benefícios</a>
+                <a href="#depoimentos" class="nav-link">Depoimentos</a>
+                <a href="#planos" class="nav-link">Planos</a>
+                <a href="#mentor" class="nav-link">Mentor</a>
 
-    </nav>
-  </div>
+                <div class="navbar-actions">
+                    <a href="#" class="btn btn-outline">Área do Aluno</a>
+                    <a href="#planos" class="btn btn-primary" (click)="closeMenu()">Quero fazer minha aplicação</a>
+                </div>
+            </div>
+
+            <!-- BOTÃO DE MENU MOBILE -->
+            <button
+                    class="navbar-toggle"
+                    [class.is-active]="isMenuOpen"
+                    (click)="toggleMenu()"
+                    aria-label="Alternar menu de navegação"
+                    [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </nav>
+    </div>
 </header>
-

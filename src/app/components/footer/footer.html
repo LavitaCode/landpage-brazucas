@@ -1,95 +1,125 @@
-<footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-main">
-        <div class="footer-brand">
-          <img 
-            src="assets/images/logos/logoprincipal_v2/Logo principal/logo-principal-branco-negativo.png" 
-            alt="Brazucas no Board" 
-            class="footer-logo">
-          <p class="brand-description">{{ content.footer.brand.description }}</p>
-          <div class="social-links">
-            <!-- Placeholder para ícones de redes sociais -->
-            <a href="#" aria-label="Facebook" class="social-link">
-              <i class="fab fa-facebook-f" aria-hidden="true"></i>
-            </a>
-            <a href="#" aria-label="Instagram" class="social-link">
-              <i class="fab fa-instagram" aria-hidden="true"></i>
-            </a>
-            <a href="#" aria-label="LinkedIn" class="social-link">
-              <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-            </a>
-            <a href="#" aria-label="YouTube" class="social-link">
-              <i class="fab fa-youtube" aria-hidden="true"></i>
-            </a>
-          </div>
+<footer class="site-footer" role="contentinfo">
+    <div class="container">
+        <!-- GRID PRINCIPAL -->
+        <div class="footer-grid">
+            <!-- COLUNA: MARCA -->
+            <section class="col brand" aria-labelledby="footer-brand-title">
+                <a class="brand-logo notranslate" href="/" aria-label="Página inicial">
+                    <img
+                            [src]="content.brand.logoSrc"
+                            [alt]="content.brand.name"
+                            width="180"
+                            height="40"
+                            loading="lazy"
+                    />
+                </a>
+                <h2 id="footer-brand-title" class="sr-only notranslate">
+                    {{ content.brand.name }}
+                </h2>
+                <p class="brand-copy">
+                    {{ content.brand.description }}
+                </p>
+
+                <nav class="social" aria-label="Redes sociais">
+                    <a
+                            *ngFor="let s of content.social"
+                            class="social-link"
+                            [href]="s.href"
+                            target="_blank"
+                            rel="noopener"
+                            [attr.aria-label]="s.ariaLabel"
+                    >
+                        <i class="{{ s.icon }}" aria-hidden="true"></i>
+                    </a>
+                </nav>
+            </section>
+
+            <!-- COLUNA: NAVEGAÇÃO DO CURSO -->
+            <nav class="col links" aria-labelledby="footer-course-title">
+                <h3 id="footer-course-title" class="link-title">
+                    {{ content.nav.course.title }}
+                </h3>
+                <ul class="link-list">
+                    <li *ngFor="let item of content.nav.course.items">
+                        <a
+                                class="link"
+                                [href]="item.href"
+                                [attr.aria-label]="item.ariaLabel || item.label"
+                                [attr.target]="item.external ? '_blank' : null"
+                                [attr.rel]="item.external ? 'noopener' : null"
+                        >{{ item.label }}</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- COLUNA: SUPORTE -->
+            <nav class="col links" aria-labelledby="footer-support-title">
+                <h3 id="footer-support-title" class="link-title">
+                    {{ content.nav.support.title }}
+                </h3>
+                <ul class="link-list">
+                    <li *ngFor="let item of content.nav.support.items">
+                        <a
+                                class="link"
+                                [href]="item.href"
+                                [attr.aria-label]="item.ariaLabel || item.label"
+                                [attr.target]="item.external ? '_blank' : null"
+                                [attr.rel]="item.external ? 'noopener' : null"
+                        >{{ item.label }}</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- COLUNA: CONTATO -->
+            <section class="col contact" aria-labelledby="footer-contact-title">
+                <h3 id="footer-contact-title" class="link-title">
+                    {{ content.contact.title }}
+                </h3>
+                <ul class="contact-list">
+                    <li *ngFor="let c of content.contact.items" class="contact-item">
+                        <a
+                                *ngIf="c.href; else plain"
+                                class="contact-link"
+                                [href]="c.href"
+                                [attr.aria-label]="c.ariaLabel"
+                        >
+                            <i class="{{ c.icon }}" aria-hidden="true"></i>
+                            <span [class.notranslate]="!!c.notranslate">{{ c.text }}</span>
+                        </a>
+                        <ng-template #plain>
+                            <div class="contact-plain">
+                                <i class="{{ c.icon }}" aria-hidden="true"></i>
+                                <span [class.notranslate]="!!c.notranslate">{{ c.text }}</span>
+                            </div>
+                        </ng-template>
+                    </li>
+                </ul>
+
+                <!-- Selos de segurança -->
+                <div class="security" aria-label="Sinais de segurança">
+                    <div *ngFor="let s of content.security" class="badge">
+                        <i class="{{ s.icon }}" aria-hidden="true"></i>
+                        <span>{{ s.text }}</span>
+                    </div>
+                </div>
+            </section>
         </div>
-        
-        <div class="footer-links">
-          <div class="link-group">
-            <h4>{{ content.footer.links.course.title }}</h4>
-            <ul>
-              <li *ngFor="let item of content.footer.links.course.items"><a href="#">{{ item }}</a></li>
-            </ul>
-          </div>
-          
-          <div class="link-group">
-            <h4>{{ content.footer.links.support.title }}</h4>
-            <ul>
-              <li *ngFor="let item of content.footer.links.support.items"><a href="#">{{ item }}</a></li>
-            </ul>
-          </div>
-          
-          <div class="link-group">
-            <h4>{{ content.footer.links.contact.title }}</h4>
-            <div class="contact-info">
-              <div class="contact-item">
-                <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                <span>{{ content.footer.links.contact.phone }}</span>
-              </div>
-              <div class="contact-item">
-                <i class="fas fa-envelope" aria-hidden="true"></i>
-                <span>{{ content.footer.links.contact.email }}</span>
-              </div>
-              <div class="contact-item">
-                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                <span>{{ content.footer.links.contact.location }}</span>
-              </div>
-            </div>
-          </div>
+
+        <!-- DIVISÓRIA -->
+        <hr class="divider" aria-hidden="true" />
+
+        <!-- BARRA INFERIOR -->
+        <div class="footer-bottom">
+            <p class="legal notranslate">
+                © {{ content.legal.year }} {{ content.legal.company }} — {{ content.legal.rights }}
+            </p>
+
+            <p class="made-with">
+                <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                <span>Feito para dentistas que sonham grande.</span>
+            </p>
         </div>
-      </div>
-      
-      <div class="footer-cta">
-        <div class="cta-content">
-          <h3>{{ content.footer.cta.title }}</h3>
-          <p>
-            {{ content.footer.cta.description }}
-          </p>
-          <a href="#" class="btn btn-primary">
-            <!-- <i class="fas fa-rocket" aria-hidden="true"></i> -->
-            {{ content.footer.cta.button }}
-          </a>
-        </div>
-      </div>
     </div>
-    
-    <div class="footer-bottom">
-      <div class="footer-copyright">
-        <p>{{ content.footer.copyright }}</p>
-      </div>
-      <div class="footer-badges">
-        <div class="security-badge">
-          <!-- <i class="fas fa-shield-alt" aria-hidden="true"></i> -->
-          <span>{{ content.footer.security.ssl }}</span>
-        </div>
-        <div class="security-badge">
-          <!-- <i class="fas fa-lock" aria-hidden="true"></i> -->
-          <span>{{ content.footer.security.secure }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
 </footer>
-
-
