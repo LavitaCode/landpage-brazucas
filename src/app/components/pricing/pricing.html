@@ -1,12 +1,13 @@
-<!-- src/app/pages/pricing/pricing.html -->
-<section class="pricing section" id="planos" aria-labelledby="pricing-title">
+<section class="pricing section is-dark" id="planos" aria-labelledby="pricing-title">
     <div class="container">
         <header class="section-header text-center">
             <div class="section-badge">
                 <i class="bi bi-stars" aria-hidden="true"></i>
                 <span>OS PLANOS</span>
             </div>
-            <h2 id="pricing-title" class="section-title"><span class="notranslate">Brazucas no Board</span></h2>
+            <h2 id="pricing-title" class="section-title">
+                <span class="notranslate">Brazucas no Board</span>
+            </h2>
             <p class="section-description">Escolha o plano que melhor se adapta às suas necessidades.</p>
         </header>
 
@@ -24,10 +25,13 @@
         </div>
 
         <div class="pricing-tabs-grid">
-            <nav class="tabs-rail"
-                 role="tablist"
-                 aria-label="Planos disponíveis"
-                 (keydown)="onTabsKeydown($event)">
+            <!-- ABAS -->
+            <nav
+                    class="tabs-rail"
+                    role="tablist"
+                    aria-label="Planos disponíveis"
+                    (keydown)="onTabsKeydown($event)"
+            >
                 <button
                         type="button"
                         class="tab-pill"
@@ -37,9 +41,11 @@
                         [id]="tabId(i)"
                         [attr.aria-selected]="isActive(i)"
                         [attr.aria-controls]="panelId(i)"
+                        [ngStyle]="isActive(i) ? styleVars(p.id) : null"
                         tabindex="{{ isActive(i) ? 0 : -1 }}"
-                        (click)="selectPlan(i)">
-                    <span class="pill-index">{{ p.order | number:'2.0' }}</span>
+                        (click)="selectPlan(i)"
+                >
+                    <span class="pill-index">{{ p.order | number: '2.0' }}</span>
                     <span class="pill-name notranslate">{{ p.name }}</span>
                 </button>
 
@@ -55,11 +61,18 @@
                 </div>
             </nav>
 
-            <section class="tab-panel"
-                     role="tabpanel"
-                     [id]="panelId(selectedIndex)"
-                     [attr.aria-labelledby]="tabId(selectedIndex)">
-                <article class="pricing-card card" [class.featured]="currentPlan().featured">
+            <!-- PAINEL -->
+            <section
+                    class="tab-panel"
+                    role="tabpanel"
+                    [id]="panelId(selectedIndex)"
+                    [attr.aria-labelledby]="tabId(selectedIndex)"
+            >
+                <article
+                        class="pricing-card card"
+                        [class.featured]="currentPlan().featured"
+                        [ngStyle]="styleVars(currentPlan().id)"
+                >
                     <header class="plan-header">
                         <div class="plan-badge" *ngIf="currentPlan().badge">
                             <i class="bi bi-fire" aria-hidden="true"></i>
@@ -92,12 +105,14 @@
                     </div>
 
                     <div class="plan-action">
-                        <a href="#"
-                           class="btn"
-                           [ngClass]="btnClass(currentPlan().featured)">
+                        <a href="#precos" class="btn" [ngClass]="btnClass(currentPlan().featured)">
                             <i class="bi bi-rocket-takeoff-fill me-1" aria-hidden="true"></i>
                             Quero fazer parte agora
                         </a>
+                        <div class="cta-microcopy">
+                            <i class="bi bi-shield-lock" aria-hidden="true"></i>
+                            Risco zero: garantia de 7 dias.
+                        </div>
                     </div>
                 </article>
             </section>
